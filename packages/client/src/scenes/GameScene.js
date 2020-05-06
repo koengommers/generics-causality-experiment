@@ -111,7 +111,7 @@ export default class GameScene extends Phaser.Scene {
       if (this.currentLevel < this.levels.length) {
         this.scene.restart({ level: this.currentLevel + 1});
       } else {
-        this.scene.stop();
+        this.scene.start('form-scene');
       }
     }
 

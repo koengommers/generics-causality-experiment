@@ -1,0 +1,80 @@
+<style>
+  .form {
+    background-color: #fff;
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    padding: 20px;
+    border-radius: 5px;
+    width: 400px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  .form-question {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .form-options {
+    display: flex;
+  }
+
+  .form-options div {
+    width: 20%;
+  }
+
+  .form-options input {
+    display: block;
+    margin: 0 auto 10px;
+  }
+
+  .form-submit {
+    text-align: right;
+  }
+
+  input[type=submit] {
+    background-color: #222;
+    box-shadow: none;
+    color: #fff;
+    font-family: inherit;
+    font-size: inherit;
+    border: 0;
+    margin-top: 20px;
+    padding: 6px 12px;
+    border-radius: 2px;
+  }
+</style>
+
+<form class="form">
+  <div class="form-question">Birds fly</div>
+  <div class="form-options">
+    <div>
+      <input type="radio" id="option-1" name="response" value="1">
+      <label for="option-1">Very incorrect</label>
+    </div>
+
+    <div>
+      <input type="radio" id="option-2" name="response" value="2">
+      <label for="option-2">Incorrect</label>
+    </div>
+
+    <div>
+      <input type="radio" id="option-3" name="response" value="3">
+      <label for="option-3">Neutral</label>
+    </div>
+
+    <div>
+      <input type="radio" id="option-4" name="response" value="4">
+      <label for="option-4">Correct</label>
+    </div>
+
+    <div>
+      <input type="radio" id="option-5" name="response" value="5">
+      <label for="option-5">Very correct</label>
+    </div>
+  </div>
+
+  <div class="form-submit">
+    <input type="submit" value="Next" name="next-button">
+  </div>
+</form>

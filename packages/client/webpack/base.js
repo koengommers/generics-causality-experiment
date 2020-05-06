@@ -7,6 +7,7 @@ module.exports = {
   mode: "development",
   devtool: "eval-source-map",
   devServer: {
+    contentBase: path.join(__dirname, '../src/assets'),
     port: 3000,
     proxy: {
       '/api': 'http://localhost:8080'
