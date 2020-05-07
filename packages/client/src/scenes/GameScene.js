@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 
 import playerSprite from '../assets/player.png';
+import playerJumpSprite from '../assets/player-jump.png';
 import sidewalkImg from '../assets/sidewalk.png';
 import grassImg from '../assets/grass.png';
 import house1 from '../assets/house1.png';
@@ -33,6 +34,11 @@ export default class GameScene extends Phaser.Scene {
       frameHeight: 24,
       spacing: 2
     });
+    this.load.spritesheet('player-jump', playerJumpSprite, {
+      frameWidth: 14,
+      frameHeight: 24,
+      spacing: 2
+    });
     this.load.image('sidewalk', sidewalkImg);
     this.load.image('grass', grassImg);
     this.load.image('house1', house1);
@@ -47,10 +53,12 @@ export default class GameScene extends Phaser.Scene {
     const text = this.add.text(10, 10, `Town ${this.currentLevel}`);
     text.setScrollFactor(0);
 
-    this.createForeground();
+    const foreground = this.createForeground();
     const x = this.createHouses();
     this.player = this.createPlayer();
     this.keys = this.createInput();
+
+    this.physics.add.collider(this.player, foreground);
 
     this.levelWidth = x + this.houseMargin;
     this.cameras.main.setBounds(0, 0, this.levelWidth, this.game.config.height);
@@ -62,6 +70,7 @@ export default class GameScene extends Phaser.Scene {
   createPlayer() {
     const player = this.physics.add.sprite(32, 270, 'player', 1);
     player.setCollideWorldBounds(true);
+    player.setOffset(0, -10);
 
     this.anims.create({
       key: 'run',
@@ -71,12 +80,26 @@ export default class GameScene extends Phaser.Scene {
 
     this.anims.create({
       key: 'idle',
-      frames: [{ key: 'player', frame: 1 }],
+      frames: [{ key: 'player', frame: 0 }],
       frameRate: 1,
       repeat: -1
     });
 
-    return player
+    this.anims.create({
+      key: 'jump',
+      frames: [{ key: 'player-jump', frame: 0 }],
+      frameRate: 1,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: 'fall',
+      frames: [{ key: 'player-jump', frame: 1 }],
+      frameRate: 1,
+      repeat: -1
+    });
+
+    return player;
   }
 
   createHouses() {
@@ -86,15 +109,21 @@ export default class GameScene extends Phaser.Scene {
       x += this.add.sprite(x, this.game.config.height - 108, house).setOrigin(0, 1).width;
     });
 
-    return x
+    return x;
   }
 
   createForeground() {
+    const foreground = this.physics.add.staticGroup()
+
     const sidewalk = this.add.tileSprite(0, this.game.config.height - 48, 1280, 64, 'sidewalk');
     sidewalk.setOrigin(0, 1);
+    foreground.add(sidewalk);
 
     const grass = this.add.tileSprite(0, this.game.config.height - 48, 1280, 64, 'grass');
     grass.setOrigin(0, 0);
+    foreground.add(grass);
+
+    return foreground;
   }
 
   createInput() {
@@ -102,7 +131,10 @@ export default class GameScene extends Phaser.Scene {
       'left': Phaser.Input.Keyboard.KeyCodes.LEFT,
       'a': Phaser.Input.Keyboard.KeyCodes.A,
       'right': Phaser.Input.Keyboard.KeyCodes.RIGHT,
-      'd': Phaser.Input.Keyboard.KeyCodes.D
+      'd': Phaser.Input.Keyboard.KeyCodes.D,
+      'up': Phaser.Input.Keyboard.KeyCodes.UP,
+      'w': Phaser.Input.Keyboard.KeyCodes.W,
+      'space': Phaser.Input.Keyboard.KeyCodes.SPACE
     });
   }
 
@@ -128,6 +160,19 @@ export default class GameScene extends Phaser.Scene {
     } else {
       this.player.setVelocityX(0);
       this.player.anims.play('idle', true);
+    }
+
+    if (
+      (this.keys.up.isDown || this.keys.w.isDown || this.keys.space.isDown) &&
+      this.player.body.onFloor()
+    ) {
+      this.player.setVelocityY(-150);
+    }
+
+    if (this.player.body.velocity.y < 0) {
+      this.player.anims.play('jump');
+    } else if (this.player.body.velocity.y > 0) {
+      this.player.anims.play('fall');
     }
   }
 }
