@@ -1,26 +1,55 @@
 import Phaser from 'phaser';
+import _ from 'lodash';
 
 import playerSprite from '../assets/player.png';
 import playerJumpSprite from '../assets/player-jump.png';
 import sidewalkImg from '../assets/sidewalk.png';
 import grassImg from '../assets/grass.png';
-import house1 from '../assets/house1.png';
-import house2 from '../assets/house2.png';
-import house3 from '../assets/house3.png';
-import house4 from '../assets/house4.png';
+import singleStoryHome1 from '../assets/single-story-home-1.png';
+import singleStoryHome2 from '../assets/single-story-home-2.png';
+import multiStoryHome1 from '../assets/multi-story-home-1.png';
+import multiStoryHome2 from '../assets/multi-story-home-2.png';
+import multiStoryHome3 from '../assets/multi-story-home-3.png';
+import singleStoryWarehouse from '../assets/single-story-warehouse.png';
+import multiStoryWarehouse from '../assets/multi-story-warehouse.png';
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
     super('game-scene');
 
-    this.levels = [
-      ['house1', 'house2', 'house3', 'house4'],
-      ['house2', 'house4', 'house3', 'house4'],
-      ['house3', 'house2', 'house1', 'house4'],
-      ['house1', 'house4', 'house3', 'house1'],
-      ['house3', 'house2', 'house4', 'house4']
-    ]
+    this.levels = this.divideBuildings(5, [{
+      images: ['single-story-home-1', 'single-story-home-2'],
+      number: 2*3
+    }, {
+      images: ['multi-story-home-1', 'multi-story-home-2', 'multi-story-home-3'],
+      number: 8*3
+    }, {
+      images: ['single-story-warehouse'],
+      number: 7
+    }, {
+      images: ['multi-story-warehouse'],
+      number: 3
+    }]);
     this.houseMargin = 16*6;
+  }
+
+  divideBuildings(nTowns, buildings) {
+    const totalBuildings = _.sumBy(buildings, 'number');
+    const chunks = _(buildings)
+      .flatMap((building) => _.times(building.number, () => _.sample(building.images)))
+      .shuffle()
+      .chunk(_.floor(totalBuildings / nTowns))
+      .value();
+    if (chunks.length > nTowns) {
+      const leftovers = _.last(chunks);
+      return _.shuffle(_.map(_.take(chunks, nTowns), (chunk, i) => {
+        if (i < leftovers.length) {
+          return chunk.concat([leftovers[i]]);
+        }
+        return chunk;
+      }));
+    }
+    return chunks;
   }
 
   init(props) {
@@ -41,10 +70,13 @@ export default class GameScene extends Phaser.Scene {
     });
     this.load.image('sidewalk', sidewalkImg);
     this.load.image('grass', grassImg);
-    this.load.image('house1', house1);
-    this.load.image('house2', house2);
-    this.load.image('house3', house3);
-    this.load.image('house4', house4);
+    this.load.image('single-story-home-1', singleStoryHome1);
+    this.load.image('single-story-home-2', singleStoryHome2);
+    this.load.image('multi-story-home-1', multiStoryHome1);
+    this.load.image('multi-story-home-2', multiStoryHome2);
+    this.load.image('multi-story-home-3', multiStoryHome3);
+    this.load.image('single-story-warehouse', singleStoryWarehouse);
+    this.load.image('multi-story-warehouse', multiStoryWarehouse);
   }
 
   create() {
