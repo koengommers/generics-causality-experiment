@@ -12,6 +12,7 @@ import multiStoryHome2 from '../assets/multi-story-home-2.png';
 import multiStoryHome3 from '../assets/multi-story-home-3.png';
 import singleStoryWarehouse from '../assets/single-story-warehouse.png';
 import multiStoryWarehouse from '../assets/multi-story-warehouse.png';
+import greenCar from '../assets/green-car.png';
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
@@ -77,6 +78,7 @@ export default class GameScene extends Phaser.Scene {
     this.load.image('multi-story-home-3', multiStoryHome3);
     this.load.image('single-story-warehouse', singleStoryWarehouse);
     this.load.image('multi-story-warehouse', multiStoryWarehouse);
+    this.load.image('green-car', greenCar);
   }
 
   create() {
@@ -88,6 +90,7 @@ export default class GameScene extends Phaser.Scene {
     const foreground = this.createForeground();
     const x = this.createHouses();
     this.player = this.createPlayer();
+    this.car = this.createCar();
     this.keys = this.createInput();
 
     this.physics.add.collider(this.player, foreground);
@@ -132,6 +135,14 @@ export default class GameScene extends Phaser.Scene {
     });
 
     return player;
+  }
+
+  createCar() {
+    const car = this.physics.add.sprite(-32, 312, 'green-car');
+    car.setOrigin(0.5, 1);
+    car.body.setAllowGravity(false);
+
+    return car;
   }
 
   createHouses() {
@@ -180,6 +191,10 @@ export default class GameScene extends Phaser.Scene {
     }
 
     const velocity = 80;
+
+    if (this.player.x > (1/8)*this.levelWidth) {
+      this.car.setVelocityX(velocity*2);
+    }
 
     if (this.keys.left.isDown || this.keys.a.isDown) {
       this.player.setVelocityX(-velocity);
