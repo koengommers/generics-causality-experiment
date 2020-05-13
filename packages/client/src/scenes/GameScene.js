@@ -3,6 +3,7 @@ import _ from 'lodash';
 
 import playerSprite from '../assets/player.png';
 import playerJumpSprite from '../assets/player-jump.png';
+import catSprite from '../assets/cat.png';
 import sidewalkImg from '../assets/sidewalk.png';
 import grassImg from '../assets/grass.png';
 import singleStoryHome1 from '../assets/single-story-home-1.png';
@@ -75,6 +76,11 @@ export default class GameScene extends Phaser.Scene {
       frameHeight: 24,
       spacing: 2
     });
+    this.load.spritesheet('cat', catSprite, {
+      frameWidth: 15,
+      frameHeight: 16,
+      spacing: 2
+    });
     this.load.image('sidewalk', sidewalkImg);
     this.load.image('grass', grassImg);
     this.load.image('single-story-home-1', singleStoryHome1);
@@ -103,6 +109,7 @@ export default class GameScene extends Phaser.Scene {
     this.car = this.createCar();
     this.keys = this.createInput();
     this.createTrees();
+    this.cat = this.createCat();
 
     this.physics.add.collider(this.player, foreground);
 
@@ -160,6 +167,22 @@ export default class GameScene extends Phaser.Scene {
     return car;
   }
 
+  createCat() {
+    const cat = this.physics.add.sprite(600, this.game.config.height - 30, 'cat', 1);
+    cat.body.setAllowGravity(false);
+    
+    this.anims.create({
+      key: 'walk',
+      frames: this.anims.generateFrameNumbers('cat'),
+      frameRate: 10,
+      repeat: -1
+    });
+
+    cat.anims.play('walk');
+
+    return cat;
+  }
+
   createParkingLot() {
     this.add.sprite(16*17, this.game.config.height, 'parking-lot').setOrigin(0, 1);
     this.add.sprite(16*19.5, this.game.config.height - 24, 'red-truck').setOrigin(0.5, 1);
@@ -213,6 +236,14 @@ export default class GameScene extends Phaser.Scene {
   }
 
   update() {
+    if (this.cat.x <= 600) {
+      this.cat.setVelocityX(30);
+      this.cat.setFlipX(false);
+    } else if (this.cat.x > 700) {
+      this.cat.setVelocityX(-30);
+      this.cat.setFlipX(true);
+    }
+
     if (this.player.x > this.levelWidth - 32) {
       this.cameras.main.fadeOut(2000);
       if (this.currentLevel < this.levels.length) {
