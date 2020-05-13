@@ -12,7 +12,11 @@ import multiStoryHome2 from '../assets/multi-story-home-2.png';
 import multiStoryHome3 from '../assets/multi-story-home-3.png';
 import singleStoryWarehouse from '../assets/single-story-warehouse.png';
 import multiStoryWarehouse from '../assets/multi-story-warehouse.png';
+import parkingLot from '../assets/parking-lot.png';
 import greenCar from '../assets/green-car.png';
+import greenTruck from '../assets/green-truck.png';
+import redCar from '../assets/red-car.png';
+import redTruck from '../assets/red-truck.png';
 import greenTree from '../assets/green-tree.png';
 import pinkTree from '../assets/pink-tree.png';
 
@@ -80,7 +84,11 @@ export default class GameScene extends Phaser.Scene {
     this.load.image('multi-story-home-3', multiStoryHome3);
     this.load.image('single-story-warehouse', singleStoryWarehouse);
     this.load.image('multi-story-warehouse', multiStoryWarehouse);
+    this.load.image('parking-lot', parkingLot);
     this.load.image('green-car', greenCar);
+    this.load.image('green-truck', greenTruck);
+    this.load.image('red-car', redCar);
+    this.load.image('red-truck', redTruck);
     this.load.image('green-tree', greenTree);
     this.load.image('pink-tree', pinkTree);
   }
@@ -91,6 +99,7 @@ export default class GameScene extends Phaser.Scene {
     const foreground = this.createForeground();
     const x = this.createHouses();
     this.player = this.createPlayer();
+    this.createParkingLot();
     this.car = this.createCar();
     this.keys = this.createInput();
     this.createTrees();
@@ -149,6 +158,14 @@ export default class GameScene extends Phaser.Scene {
     car.body.setAllowGravity(false);
 
     return car;
+  }
+
+  createParkingLot() {
+    this.add.sprite(16*17, this.game.config.height, 'parking-lot').setOrigin(0, 1);
+    this.add.sprite(16*19.5, this.game.config.height - 24, 'red-truck').setOrigin(0.5, 1);
+    this.add.sprite(16*19.5, this.game.config.height - 2, 'red-car').setOrigin(0.5, 1);
+    this.add.sprite(16*24.5, this.game.config.height - 24, 'green-car').setOrigin(0.5, 1).setFlipX(true);
+    this.add.sprite(16*24.5, this.game.config.height - 2, 'green-truck').setOrigin(0.5, 1).setFlipX(true);
   }
 
   createHouses() {
