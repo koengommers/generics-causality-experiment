@@ -84,9 +84,6 @@ export default class GameScene extends Phaser.Scene {
   create() {
     this.cameras.main.setBackgroundColor('#84dbff');
 
-    const text = this.add.text(10, 10, `Town ${this.currentLevel}`);
-    text.setScrollFactor(0);
-
     const foreground = this.createForeground();
     const x = this.createHouses();
     this.player = this.createPlayer();
@@ -99,7 +96,11 @@ export default class GameScene extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, this.levelWidth, this.game.config.height);
     this.physics.world.setBounds(0, 0, this.levelWidth, this.game.config.height);
 
+    const text = this.add.text(10, 10, `Town ${this.currentLevel}`);
+    text.setScrollFactor(0);
+
     this.cameras.main.startFollow(this.player, true, undefined, undefined, -32*8, 0);
+    this.cameras.main.fadeIn(2000);
   }
 
   createPlayer() {
@@ -183,6 +184,7 @@ export default class GameScene extends Phaser.Scene {
 
   update() {
     if (this.player.x > this.levelWidth - 32) {
+      this.cameras.main.fadeOut(2000);
       if (this.currentLevel < this.levels.length) {
         this.scene.restart({ level: this.currentLevel + 1});
       } else {

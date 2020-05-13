@@ -20,7 +20,9 @@ const config = {
   scene: [GameScene, FormScene],
   scale: {
     zoom: 2
-  }
+  },
+  autoCenter: Phaser.Scale.CENTER_BOTH,
+  backgroundColor: '#171515'
 };
 
 export default new Phaser.Game(config);
