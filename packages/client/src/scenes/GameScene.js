@@ -13,6 +13,8 @@ import multiStoryHome3 from '../assets/multi-story-home-3.png';
 import singleStoryWarehouse from '../assets/single-story-warehouse.png';
 import multiStoryWarehouse from '../assets/multi-story-warehouse.png';
 import greenCar from '../assets/green-car.png';
+import greenTree from '../assets/green-tree.png';
+import pinkTree from '../assets/pink-tree.png';
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
@@ -79,6 +81,8 @@ export default class GameScene extends Phaser.Scene {
     this.load.image('single-story-warehouse', singleStoryWarehouse);
     this.load.image('multi-story-warehouse', multiStoryWarehouse);
     this.load.image('green-car', greenCar);
+    this.load.image('green-tree', greenTree);
+    this.load.image('pink-tree', pinkTree);
   }
 
   create() {
@@ -89,6 +93,7 @@ export default class GameScene extends Phaser.Scene {
     this.player = this.createPlayer();
     this.car = this.createCar();
     this.keys = this.createInput();
+    this.createTrees();
 
     this.physics.add.collider(this.player, foreground);
 
@@ -154,6 +159,14 @@ export default class GameScene extends Phaser.Scene {
     });
 
     return x;
+  }
+
+  createTrees() {
+    this.add.sprite(200, 360, 'green-tree').setOrigin(0.5, 1);
+    this.add.sprite(230, 380, 'green-tree').setOrigin(0.5, 1);
+    this.add.sprite(500, 360, 'pink-tree').setOrigin(0.5, 1);
+    this.add.sprite(180, 370, 'pink-tree').setOrigin(0.5, 1);
+    this.add.sprite(480, 380, 'green-tree').setOrigin(0.5, 1);
   }
 
   createForeground() {
