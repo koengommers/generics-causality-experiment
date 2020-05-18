@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 
-import GameScene from './scenes/GameScene';
+import LoadScene from './scenes/LoadScene';
+import TownScene from './scenes/TownScene';
 import FormScene from './scenes/FormScene';
 
 const config = {
@@ -17,7 +18,7 @@ const config = {
   dom: {
     createContainer: true
   },
-  scene: [GameScene, FormScene],
+  scene: [LoadScene, TownScene, FormScene],
   scale: {
     zoom: 2
   },
