@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
-import _ from 'lodash';
+
+import generateLevels from '../utils/generateLevels';
 
 import playerSprite from '../assets/player.png';
 import playerJumpSprite from '../assets/player-jump.png';
@@ -25,43 +26,14 @@ export default class GameScene extends Phaser.Scene {
   constructor() {
     super('game-scene');
 
-    this.levels = this.divideBuildings(5, [{
-      images: ['single-story-home-1', 'single-story-home-2'],
-      number: 2*3
-    }, {
-      images: ['multi-story-home-1', 'multi-story-home-2', 'multi-story-home-3'],
-      number: 8*3
-    }, {
-      images: ['single-story-warehouse'],
-      number: 7
-    }, {
-      images: ['multi-story-warehouse'],
-      number: 3
-    }]);
-  }
-
-  divideBuildings(nTowns, buildings) {
-    const totalBuildings = _.sumBy(buildings, 'number');
-    const chunks = _(buildings)
-      .flatMap((building) => _.times(building.number, () => _.sample(building.images)))
-      .shuffle()
-      .chunk(_.floor(totalBuildings / nTowns))
-      .value();
-    if (chunks.length > nTowns) {
-      const leftovers = _.last(chunks);
-      return _.shuffle(_.map(_.take(chunks, nTowns), (chunk, i) => {
-        if (i < leftovers.length) {
-          return chunk.concat([leftovers[i]]);
-        }
-        return chunk;
-      }));
-    }
-    return chunks;
+    this.levels = generateLevels(5);
   }
 
   init(props) {
     const { level = 1 } = props;
     this.currentLevel = level;
+    this.level = this.levels[level-1];
+    this.finished = false;
   }
 
   preload() {
@@ -101,28 +73,19 @@ export default class GameScene extends Phaser.Scene {
   create() {
     this.cameras.main.setBackgroundColor('#84dbff');
 
-    const foreground = this.createForeground();
-    const x = this.createHouses();
+    const ground = this.createGround();
+    this.createLevel();
+
     this.player = this.createPlayer();
-    this.createParkingLot();
-    this.car = this.createCar();
     this.keys = this.createInput();
-    this.createTrees();
-    this.cat = this.createCat();
 
-    this.physics.add.collider(this.player, foreground);
+    this.physics.add.collider(this.player, ground);
 
-    this.levelWidth = x + 16*16;
-    this.cameras.main.setBounds(0, 0, this.levelWidth, this.game.config.height);
-    this.physics.world.setBounds(0, 0, this.levelWidth, this.game.config.height);
+    this.cameras.main.setBounds(0, 0, this.level.width*16, this.game.config.height);
+    this.physics.world.setBounds(0, 0, this.level.width*16, this.game.config.height);
 
-    const text = this.add.text(10, 10, `Town ${this.currentLevel}`);
-    text.setScrollFactor(0);
-
-    this.cameras.main.startFollow(this.player, true, undefined, undefined, -32*8, 0);
+    this.cameras.main.startFollow(this.player, true, undefined, undefined, -16*16, 0);
     this.cameras.main.fadeIn(1000, 23, 21, 21);
-
-    this.finished = false;
   }
 
   createPlayer() {
@@ -160,68 +123,59 @@ export default class GameScene extends Phaser.Scene {
     return player;
   }
 
-  createCar() {
-    const car = this.physics.add.sprite(-32, 312, 'green-car');
-    car.setOrigin(0.5, 1);
-    car.body.setAllowGravity(false);
+  createGround() {
+    const ground = this.physics.add.staticGroup();
 
-    return car;
-  }
-
-  createCat() {
-    const cat = this.physics.add.sprite(600, this.game.config.height - 30, 'cat', 1);
-    cat.body.setAllowGravity(false);
-    
-    this.anims.create({
-      key: 'walk',
-      frames: this.anims.generateFrameNumbers('cat'),
-      frameRate: 10,
-      repeat: -1
+    ['grass', 'sidewalk'].forEach((spriteName, i) => {
+      const sprite = this.add.tileSprite(0, this.game.config.height - 48, this.level.width*16, 64, spriteName).setOrigin(0, i);
+      ground.add(sprite);
     });
 
-    cat.anims.play('walk');
-
-    return cat;
+    return ground;
   }
 
-  createParkingLot() {
-    this.add.sprite(16*17, this.game.config.height, 'parking-lot').setOrigin(0, 1);
-    this.add.sprite(16*19.5, this.game.config.height - 24, 'red-truck').setOrigin(0.5, 1);
-    this.add.sprite(16*19.5, this.game.config.height - 2, 'red-car').setOrigin(0.5, 1);
-    this.add.sprite(16*24.5, this.game.config.height - 24, 'green-car').setOrigin(0.5, 1).setFlipX(true);
-    this.add.sprite(16*24.5, this.game.config.height - 2, 'green-truck').setOrigin(0.5, 1).setFlipX(true);
+  createLevel() {
+    this.createBuildings();
+    this.createForeground();
+
+    const text = this.add.text(10, 10, `Town ${this.currentLevel}`);
+    text.setScrollFactor(0);
   }
 
-  createHouses() {
+  createBuildings() {
     let x = 16*6;
 
-    this.levels[this.currentLevel-1].forEach((house) => {
-      x += this.add.sprite(x, this.game.config.height - 108, house).setOrigin(0, 1).width;
+    this.level.buildings.forEach((building) => {
+      x += this.add.sprite(x, this.game.config.height - 108, building).setOrigin(0, 1).width;
     });
-
-    return x;
-  }
-
-  createTrees() {
-    this.add.sprite(200, 360, 'green-tree').setOrigin(0.5, 1);
-    this.add.sprite(230, 380, 'green-tree').setOrigin(0.5, 1);
-    this.add.sprite(500, 360, 'pink-tree').setOrigin(0.5, 1);
-    this.add.sprite(180, 370, 'pink-tree').setOrigin(0.5, 1);
-    this.add.sprite(480, 380, 'green-tree').setOrigin(0.5, 1);
   }
 
   createForeground() {
-    const foreground = this.physics.add.staticGroup()
+    let x = 6;
 
-    const sidewalk = this.add.tileSprite(0, this.game.config.height - 48, 1280, 64, 'sidewalk');
-    sidewalk.setOrigin(0, 1);
-    foreground.add(sidewalk);
-
-    const grass = this.add.tileSprite(0, this.game.config.height - 48, 1280, 64, 'grass');
-    grass.setOrigin(0, 0);
-    foreground.add(grass);
-
-    return foreground;
+    this.level.foreground.forEach(item => {
+      if (item.type === 'parking') {
+        this.add.sprite((x+2)*16, this.game.config.height, 'parking-lot').setOrigin(0, 1);
+        item.cars.forEach((car, i) => {
+          if (car) {
+            const carX = (x + (i < 2 ? 4.5 : 9.5))*16;
+            const y = this.game.config.height - (i % 2 ? 2 : 24);
+            const sprite = this.add.sprite(carX, y, car).setOrigin(0.5, 1);
+            if (i >= 2) {
+              sprite.setFlipX(true);
+            }
+          }
+        });
+        x += 14;
+      } else if (item.type === 'forest') {
+        item.trees.forEach((tree) => {
+          const treeX = x*16 + tree.x;
+          const y = this.game.config.height - 3*16 + tree.y;
+          this.add.sprite(treeX, y, tree.sprite).setOrigin(0.5, 1);
+        });
+        x += 8;
+      }
+    });
   }
 
   createInput() {
@@ -237,15 +191,15 @@ export default class GameScene extends Phaser.Scene {
   }
 
   update() {
-    if (this.cat.x <= 600) {
-      this.cat.setVelocityX(30);
-      this.cat.setFlipX(false);
-    } else if (this.cat.x > 700) {
-      this.cat.setVelocityX(-30);
-      this.cat.setFlipX(true);
-    }
+    this.checkFinish();
+    this.updatePlayer();
+  }
 
-    if (this.player.x > this.levelWidth - 16*10 && !this.finished) {
+  checkFinish() {
+    if (
+      this.player.x > (this.level.width - 10)*16
+      && !this.finished
+    ) {
       this.finished = true;
       this.cameras.main.fadeOut(1000, 23, 21, 21);
       this.cameras.main.once('camerafadeoutcomplete', () => {
@@ -256,12 +210,10 @@ export default class GameScene extends Phaser.Scene {
         }
       });
     }
+  }
 
+  updatePlayer() {
     const velocity = 80;
-
-    if (this.player.x > (1/8)*this.levelWidth) {
-      this.car.setVelocityX(velocity*2);
-    }
 
     if (this.keys.left.isDown || this.keys.a.isDown) {
       this.player.setVelocityX(-velocity);
@@ -277,8 +229,8 @@ export default class GameScene extends Phaser.Scene {
     }
 
     if (
-      (this.keys.up.isDown || this.keys.w.isDown || this.keys.space.isDown) &&
-      this.player.body.onFloor()
+      (this.keys.up.isDown || this.keys.w.isDown || this.keys.space.isDown)
+      && this.player.body.onFloor()
     ) {
       this.player.setVelocityY(-150);
     }
