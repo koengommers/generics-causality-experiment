@@ -43,10 +43,16 @@ const LEVELS_CONFIG = {
     number: 7*2
   }],
   trees: [{
-    sprite: 'pink-tree',
+    sprite: 'small-pink-tree',
     number: 8*2
   }, {
-    sprite: 'green-tree',
+    sprite: 'big-pink-tree',
+    number: 2*2
+  }, {
+    sprite: 'small-green-tree',
+    number: 3*3
+  }, {
+    sprite: 'big-green-tree',
     number: 7*3
   }]
 };

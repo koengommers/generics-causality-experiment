@@ -19,8 +19,10 @@ import greenCar from '../assets/green-car.png';
 import greenTruck from '../assets/green-truck.png';
 import redCar from '../assets/red-car.png';
 import redTruck from '../assets/red-truck.png';
-import greenTree from '../assets/green-tree.png';
-import pinkTree from '../assets/pink-tree.png';
+import smallGreenTree from '../assets/small-green-tree.png';
+import bigGreenTree from '../assets/big-green-tree.png';
+import smallPinkTree from '../assets/small-pink-tree.png';
+import bigPinkTree from '../assets/big-pink-tree.png';
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
@@ -66,8 +68,10 @@ export default class GameScene extends Phaser.Scene {
     this.load.image('green-truck', greenTruck);
     this.load.image('red-car', redCar);
     this.load.image('red-truck', redTruck);
-    this.load.image('green-tree', greenTree);
-    this.load.image('pink-tree', pinkTree);
+    this.load.image('small-green-tree', smallGreenTree);
+    this.load.image('big-green-tree', bigGreenTree);
+    this.load.image('small-pink-tree', smallPinkTree);
+    this.load.image('big-pink-tree', bigPinkTree);
   }
 
   create() {
