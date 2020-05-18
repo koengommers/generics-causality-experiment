@@ -38,7 +38,6 @@ export default class GameScene extends Phaser.Scene {
       images: ['multi-story-warehouse'],
       number: 3
     }]);
-    this.houseMargin = 16*6;
   }
 
   divideBuildings(nTowns, buildings) {
@@ -113,7 +112,7 @@ export default class GameScene extends Phaser.Scene {
 
     this.physics.add.collider(this.player, foreground);
 
-    this.levelWidth = x + this.houseMargin;
+    this.levelWidth = x + 16*16;
     this.cameras.main.setBounds(0, 0, this.levelWidth, this.game.config.height);
     this.physics.world.setBounds(0, 0, this.levelWidth, this.game.config.height);
 
@@ -121,7 +120,9 @@ export default class GameScene extends Phaser.Scene {
     text.setScrollFactor(0);
 
     this.cameras.main.startFollow(this.player, true, undefined, undefined, -32*8, 0);
-    this.cameras.main.fadeIn(2000);
+    this.cameras.main.fadeIn(1000, 23, 21, 21);
+
+    this.finished = false;
   }
 
   createPlayer() {
@@ -192,7 +193,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   createHouses() {
-    let x = this.houseMargin;
+    let x = 16*6;
 
     this.levels[this.currentLevel-1].forEach((house) => {
       x += this.add.sprite(x, this.game.config.height - 108, house).setOrigin(0, 1).width;
@@ -244,13 +245,16 @@ export default class GameScene extends Phaser.Scene {
       this.cat.setFlipX(true);
     }
 
-    if (this.player.x > this.levelWidth - 32) {
-      this.cameras.main.fadeOut(2000);
-      if (this.currentLevel < this.levels.length) {
-        this.scene.restart({ level: this.currentLevel + 1});
-      } else {
-        this.scene.start('form-scene');
-      }
+    if (this.player.x > this.levelWidth - 16*10 && !this.finished) {
+      this.finished = true;
+      this.cameras.main.fadeOut(1000, 23, 21, 21);
+      this.cameras.main.once('camerafadeoutcomplete', () => {
+        if (this.currentLevel < this.levels.length) {
+          this.scene.restart({ level: this.currentLevel + 1});
+        } else {
+          this.scene.start('form-scene');
+        }
+      });
     }
 
     const velocity = 80;
