@@ -14,6 +14,8 @@ import multiStoryHome2 from '../assets/multi-story-home-2.png';
 import multiStoryHome3 from '../assets/multi-story-home-3.png';
 import singleStoryWarehouse from '../assets/single-story-warehouse.png';
 import multiStoryWarehouse from '../assets/multi-story-warehouse.png';
+import townHall from '../assets/town-hall.png';
+import townHallClock from '../assets/town-hall.png';
 import parkingLot from '../assets/parking-lot.png';
 import greenCar from '../assets/green-car.png';
 import greenTruck from '../assets/green-truck.png';
@@ -63,6 +65,8 @@ export default class GameScene extends Phaser.Scene {
     this.load.image('multi-story-home-3', multiStoryHome3);
     this.load.image('single-story-warehouse', singleStoryWarehouse);
     this.load.image('multi-story-warehouse', multiStoryWarehouse);
+    this.load.image('town-hall', townHall);
+    this.load.image('town-hall-clock', townHallClock);
     this.load.image('parking-lot', parkingLot);
     this.load.image('green-car', greenCar);
     this.load.image('green-truck', greenTruck);

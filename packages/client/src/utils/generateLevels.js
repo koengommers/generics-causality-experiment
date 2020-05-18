@@ -8,6 +8,8 @@ const BUILDING_WIDTHS = {
   'multi-story-home-3': 6,
   'single-story-warehouse': 5,
   'multi-story-warehouse': 5,
+  'town-hall': 8,
+  'town-hall-clock': 8
 }
 
 const FOREGROUND_WIDTHS = {
@@ -59,21 +61,26 @@ const LEVELS_CONFIG = {
 
 function generateBuildings(n) {
   const totalBuildings = _.sumBy(LEVELS_CONFIG.buildings, 'number');
-  const buildings = _(LEVELS_CONFIG.buildings)
+  let buildings = _(LEVELS_CONFIG.buildings)
     .flatMap((building) => _.times(building.number, () => _.sample(building.images)))
     .shuffle()
     .chunk(_.floor(totalBuildings / n))
     .value();
   if (buildings.length > n) {
     const leftovers = _.last(buildings);
-    return _.shuffle(_.map(_.take(buildings, n), (chunk, i) => {
+    buildings = _.shuffle(_.map(_.take(buildings, n), (chunk, i) => {
       if (i < leftovers.length) {
         return chunk.concat([leftovers[i]]);
       }
       return chunk;
     }));
   }
-  return buildings;
+
+  const noClock = _.random(n-1);
+  return buildings.map((level, i) => {
+    level.splice(_.floor(level.length/2), 0, i == noClock ? 'town-hall' : 'town-hall-clock');
+    return level
+  });
 }
 
 function generateForeground(n) {
