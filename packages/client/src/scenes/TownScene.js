@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import _ from "lodash";
 
 import generateLevels from '../utils/generateLevels';
 
@@ -83,6 +84,7 @@ export default class TownScene extends Phaser.Scene {
   createLevel() {
     this.createBuildings();
     this.createForeground();
+    this.createPeople();
 
     const text = this.add.text(10, 10, `Town ${this.currentLevel}`);
     text.setScrollFactor(0);
@@ -124,6 +126,17 @@ export default class TownScene extends Phaser.Scene {
     });
   }
 
+  createPeople() {
+    this.people = this.physics.add.group();
+
+    this.level.people.forEach((personSprite) => {
+      const person =  this.people.create(_.random(16, (this.level.width-1)*16), this.game.config.height - 72, personSprite);
+      person.body.setAllowGravity(false);
+      person.setCollideWorldBounds(true);
+      person.setVelocityX(_.random(-45, 45));
+    });
+  }
+
   createInput() {
     return this.input.keyboard.addKeys({
       'left': Phaser.Input.Keyboard.KeyCodes.LEFT,
@@ -139,6 +152,17 @@ export default class TownScene extends Phaser.Scene {
   update() {
     this.checkFinish();
     this.updatePlayer();
+
+    this.people.getChildren().forEach(person => {
+      if (Math.random() < 0.01) {
+        person.setVelocityX(_.random(-45, 45));
+      }
+      if (person.body.velocity.x < 0) {
+        person.setFlipX(true);
+      } else {
+        person.setFlipX(false);
+      }
+    })
   }
 
   checkFinish() {

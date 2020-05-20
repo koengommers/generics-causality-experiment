@@ -56,6 +56,13 @@ const LEVELS_CONFIG = {
   }, {
     sprite: 'big-green-tree',
     number: 7*3
+  }],
+  people: [{
+    sprite: 'person-blue',
+    number: 8*2
+  }, {
+    sprite: 'person',
+    number: 2*2
   }]
 };
 
@@ -126,9 +133,19 @@ function generateForeground(n) {
   });
 }
 
+function generatePeople(n) {
+  return _(LEVELS_CONFIG.people)
+  .flatMap((person) => _.times(person.number, () => person.sprite))
+  .shuffle()
+  .groupBy(() => _.random(0, n-1))
+  .values()
+  .value();
+}
+
 export default function generateLevels(n) {
   const buildings = generateBuildings(n);
   const foreground = generateForeground(n);
+  const people = generatePeople(n)
 
   return _.map(_.range(n), (i) => {
     const buildingsWidth = _.sumBy(buildings[i], (building) => BUILDING_WIDTHS[building]);
@@ -136,7 +153,8 @@ export default function generateLevels(n) {
     return {
       width: _.max([buildingsWidth, foregroundWidth]) + 20,
       buildings: buildings[i],
-      foreground: foreground[i]
+      foreground: foreground[i],
+      people: people[i]
     }
   });
 }

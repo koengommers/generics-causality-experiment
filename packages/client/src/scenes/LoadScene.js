@@ -23,6 +23,8 @@ import smallGreenTree from '../assets/small-green-tree.png';
 import bigGreenTree from '../assets/big-green-tree.png';
 import smallPinkTree from '../assets/small-pink-tree.png';
 import bigPinkTree from '../assets/big-pink-tree.png';
+import person from '../assets/person.png';
+import personBlue from '../assets/person-blue.png';
 
 export default class TownScene extends Phaser.Scene {
   constructor() {
@@ -65,6 +67,8 @@ export default class TownScene extends Phaser.Scene {
     this.load.image('big-green-tree', bigGreenTree);
     this.load.image('small-pink-tree', smallPinkTree);
     this.load.image('big-pink-tree', bigPinkTree);
+    this.load.image('person', person);
+    this.load.image('person-blue', personBlue);
   }
 
   create() {
