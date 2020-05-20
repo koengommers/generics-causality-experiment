@@ -25,8 +25,9 @@ import smallPinkTree from '../assets/small-pink-tree.png';
 import bigPinkTree from '../assets/big-pink-tree.png';
 import person from '../assets/person.png';
 import personBlue from '../assets/person-blue.png';
+import policeMan from '../assets/police-man.png';
 
-export default class TownScene extends Phaser.Scene {
+export default class LoadScene extends Phaser.Scene {
   constructor() {
     super('load-scene');
   }
@@ -69,9 +70,10 @@ export default class TownScene extends Phaser.Scene {
     this.load.image('big-pink-tree', bigPinkTree);
     this.load.image('person', person);
     this.load.image('person-blue', personBlue);
+    this.load.image('police-man', policeMan);
   }
 
   create() {
-    this.scene.start('town-scene')
+    this.scene.start('intro-scene')
   }
 }
