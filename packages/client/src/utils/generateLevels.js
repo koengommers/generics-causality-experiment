@@ -2,14 +2,7 @@ import _ from 'lodash';
 
 const BUILDING_WIDTHS = {
   'single-story-home-1': 6,
-  'single-story-home-2': 6,
-  'multi-story-home-1': 8,
-  'multi-story-home-2': 6,
-  'multi-story-home-3': 6,
-  'single-story-warehouse': 5,
-  'multi-story-warehouse': 5,
-  'town-hall': 8,
-  'town-hall-clock': 8
+  'single-story-home-2': 6
 }
 
 const FOREGROUND_WIDTHS = {
@@ -20,16 +13,7 @@ const FOREGROUND_WIDTHS = {
 const LEVELS_CONFIG = {
   buildings: [{
     images: ['single-story-home-1', 'single-story-home-2'],
-    number: 2*3
-  }, {
-    images: ['multi-story-home-1', 'multi-story-home-2', 'multi-story-home-3'],
-    number: 8*3
-  }, {
-    images: ['single-story-warehouse'],
-    number: 7
-  }, {
-    images: ['multi-story-warehouse'],
-    number: 3
+    number: 20
   }],
   cars: [{
     sprite: 'green-truck',
@@ -83,11 +67,7 @@ function generateBuildings(n) {
     }));
   }
 
-  const noClock = _.random(n-1);
-  return buildings.map((level, i) => {
-    level.splice(_.floor(level.length/2), 0, i == noClock ? 'town-hall' : 'town-hall-clock');
-    return level
-  });
+  return buildings;
 }
 
 function generateForeground(n) {
