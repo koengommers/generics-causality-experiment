@@ -12,48 +12,63 @@ const FOREGROUND_WIDTHS = {
 
 const LEVELS_CONFIG = {
   buildings: [{
-    images: ['single-story-home-1', 'single-story-home-2'],
-    number: 20
+    sprite: ['house-wood-dotted-1', 'house-wood-dotted-2'],
+    number: 8*2
+  }, {
+    sprite: ['house-wood-tiles-1', 'house-wood-tiles-2'],
+    number: 2*2
+  }, {
+    sprite: ['house-brick-dotted-1', 'house-brick-dotted-2'],
+    number: 2*2
+  }, {
+    sprite: ['house-brick-tiles-1', 'house-brick-tiles-2'],
+    number: 8*2
   }],
   cars: [{
-    sprite: 'green-truck',
+    sprite: ['vehicle-truck-gold'],
     number: 8*2
   }, {
-    sprite: 'red-truck',
+    sprite: ['vehicle-truck-red', 'vehicle-truck-green'],
     number: 2*2
   }, {
-    sprite: 'green-car',
-    number: 3*2
+    sprite: ['vehicle-car-gold'],
+    number: 2*2
   }, {
-    sprite: 'red-car',
-    number: 7*2
+    sprite: ['vehicle-car-red', 'vehicle-car-green'],
+    number: 8*2
   }],
   trees: [{
-    sprite: 'small-pink-tree',
+    sprite: 'tree-pink-small',
     number: 8*2
   }, {
-    sprite: 'big-pink-tree',
+    sprite: 'tree-pink-large',
     number: 2*2
   }, {
-    sprite: 'small-green-tree',
-    number: 3*3
+    sprite: 'tree-green-small',
+    number: 2*2
   }, {
-    sprite: 'big-green-tree',
-    number: 7*3
+    sprite: 'tree-green-large',
+    number: 8*2
   }],
   people: [{
-    sprite: 'person-blue',
+    sprite: 'person-man-blue',
     number: 8*2
   }, {
-    sprite: 'person',
+    sprite: 'person-man-green',
     number: 2*2
+  }, {
+    sprite: 'person-woman-blue',
+    number: 2*2
+  }, {
+    sprite: 'person-woman-green',
+    number: 8*2
   }]
 };
 
 function generateBuildings(n) {
   const totalBuildings = _.sumBy(LEVELS_CONFIG.buildings, 'number');
   let buildings = _(LEVELS_CONFIG.buildings)
-    .flatMap((building) => _.times(building.number, () => _.sample(building.images)))
+    .flatMap((building) => _.times(building.number, () => _.sample(building.sprite)))
     .shuffle()
     .chunk(_.floor(totalBuildings / n))
     .value();
@@ -73,7 +88,7 @@ function generateBuildings(n) {
 function generateForeground(n) {
   // Generate cars
   const carsInLevels = _(LEVELS_CONFIG.cars)
-    .flatMap((car) => _.times(car.number, () => car.sprite))
+    .flatMap((car) => _.times(car.number, () => _.sample(car.sprite)))
     .shuffle()
     .groupBy(() => _.random(0, n-1))
     .values()

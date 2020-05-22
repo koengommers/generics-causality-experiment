@@ -130,7 +130,7 @@ export default class TownScene extends Phaser.Scene {
     this.people = this.physics.add.group();
 
     this.level.people.forEach((personSprite) => {
-      const person =  this.people.create(_.random(16, (this.level.width-1)*16), this.game.config.height - 72, personSprite);
+      const person = this.people.create(_.random(16, (this.level.width-1)*16), this.game.config.height - 56, personSprite).setOrigin(0.5, 1);
       person.body.setAllowGravity(false);
       person.setCollideWorldBounds(true);
       person.setVelocityX(_.random(-45, 45));
