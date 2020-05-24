@@ -106,17 +106,20 @@ function generateForeground(n) {
   .values()
   .value();
   const forests = treesInLevels.map((trees) => {
-    let spots = _.shuffle(_.assign(_.fill(new Array(_.ceil(trees.length / 5)*5), null), trees));
-    spots = _.map(spots, (spot) => {
-      if (spot) {
-        return {
-          sprite: spot,
-          x: _.random(1*16, 7*16),
-          y: _.random(1*16, 3*16)
+    const treesInLevel = _.shuffle(_.assign(_.fill(new Array(_.ceil(trees.length / 5)*5), null), trees));
+    return _.map(_.chunk(treesInLevel, 5), (chunk) => {
+      const spots = _.shuffle(_.range(1, 8));
+      const forest = _.map(chunk, (tree, i) => {
+        if (tree) {
+          return {
+            sprite: tree,
+            x: spots[i]*16,
+            y: _.random(1*16, 3*16)
+          }
         }
-      }
-    })
-    return _.map(_.chunk(spots, 5), (x) => _.sortBy(_.compact(x), 'y'));
+      });
+      return _.sortBy(_.compact(forest), 'y')
+    });
   });
 
   return _.zipWith(carParks, forests, (lots, forest) => {
