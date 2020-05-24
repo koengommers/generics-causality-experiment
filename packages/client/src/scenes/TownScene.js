@@ -119,7 +119,7 @@ export default class TownScene extends Phaser.Scene {
         item.trees.forEach((tree) => {
           const treeX = x*16 + tree.x;
           const y = this.game.config.height - 3*16 + tree.y;
-          this.add.sprite(treeX, y, tree.sprite).setOrigin(0.5, 1);
+          this.add.sprite(treeX, y, tree.sprite).setOrigin(0.5, 1).depth = 999;
         });
         x += 8;
       }
