@@ -17,10 +17,10 @@ export default class ShowScene extends Phaser.Scene {
       name: 'Brick house',
       sprite: 'house-brick-example'
     }, {
-      name: '... tree',
+      name: 'Naple tree',
       sprite: 'tree-pink-example'
     }, {
-      name: '... tree',
+      name: 'Truce tree',
       sprite: 'tree-green-example'
     }, {
       name: 'Man',
