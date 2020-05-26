@@ -1,8 +1,14 @@
 import _ from 'lodash';
 
 const BUILDING_WIDTHS = {
-  'single-story-home-1': 6,
-  'single-story-home-2': 6
+  'house-wood-dotted-1': 6,
+  'house-wood-dotted-2': 6,
+  'house-wood-tiles-1': 6,
+  'house-wood-tiles-2': 6,
+  'house-brick-dotted-1': 6,
+  'house-brick-dotted-2': 8,
+  'house-brick-tiles-1': 6,
+  'house-brick-tiles-2': 8
 }
 
 const FOREGROUND_WIDTHS = {
