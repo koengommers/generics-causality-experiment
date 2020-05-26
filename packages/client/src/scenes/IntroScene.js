@@ -34,7 +34,7 @@ export default class IntroScene extends Phaser.Scene {
     const keys = ['W', 'A', 'S', 'D', 'UP', 'LEFT', 'RIGHT', 'DOWN']
     keys.forEach((key) => {
       this.input.keyboard.once(`keydown-${key}`, () => {
-        this.scene.start('town-scene');
+        this.scene.start('show-scene');
       });
     });
   }
