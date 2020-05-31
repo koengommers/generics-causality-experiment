@@ -31,11 +31,9 @@ import treePinkLarge from '../assets/subjects/tree-pink-large.png';
 import treePinkSmall from '../assets/subjects/tree-pink-small.png';
 import vehicleCarGold from '../assets/subjects/vehicle-car-gold.png';
 import vehicleCarExample from '../assets/subjects/vehicle-car-example.png';
-import vehicleCarGreen from '../assets/subjects/vehicle-car-green.png';
 import vehicleCarRed from '../assets/subjects/vehicle-car-red.png';
 import vehicleTruckGold from '../assets/subjects/vehicle-truck-gold.png';
 import vehicleTruckExample from '../assets/subjects/vehicle-truck-example.png';
-import vehicleTruckGreen from '../assets/subjects/vehicle-truck-green.png';
 import vehicleTruckRed from '../assets/subjects/vehicle-truck-red.png';
 
 export default class LoadScene extends Phaser.Scene {
@@ -83,11 +81,9 @@ export default class LoadScene extends Phaser.Scene {
     this.load.image('tree-pink-small', treePinkSmall);
     this.load.image('vehicle-car-gold', vehicleCarGold);
     this.load.image('vehicle-car-example', vehicleCarExample);
-    this.load.image('vehicle-car-green', vehicleCarGreen);
     this.load.image('vehicle-car-red', vehicleCarRed);
     this.load.image('vehicle-truck-gold', vehicleTruckGold);
     this.load.image('vehicle-truck-example', vehicleTruckExample);
-    this.load.image('vehicle-truck-green', vehicleTruckGreen);
     this.load.image('vehicle-truck-red', vehicleTruckRed);
   }
 

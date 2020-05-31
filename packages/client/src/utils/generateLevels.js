@@ -34,13 +34,13 @@ const LEVELS_CONFIG = {
     sprite: ['vehicle-truck-gold'],
     number: 8*2
   }, {
-    sprite: ['vehicle-truck-red', 'vehicle-truck-green'],
+    sprite: ['vehicle-truck-red'],
     number: 2*2
   }, {
     sprite: ['vehicle-car-gold'],
     number: 2*2
   }, {
-    sprite: ['vehicle-car-red', 'vehicle-car-green'],
+    sprite: ['vehicle-car-red'],
     number: 8*2
   }],
   trees: [{
