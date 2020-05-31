@@ -2,9 +2,11 @@ import Phaser from 'phaser';
 
 import LoadScene from './scenes/LoadScene';
 import IntroScene from './scenes/IntroScene';
+import StartScene from './scenes/StartScene';
 import ShowScene from './scenes/ShowScene';
 import TownScene from './scenes/TownScene';
 import FormScene from './scenes/FormScene';
+import FinishScene from './scenes/FinishScene';
 
 const config = {
   type: Phaser.AUTO,
@@ -20,7 +22,7 @@ const config = {
   dom: {
     createContainer: true
   },
-  scene: [LoadScene, IntroScene, ShowScene, TownScene, FormScene],
+  scene: [LoadScene, StartScene, IntroScene, ShowScene, TownScene, FormScene, FinishScene],
   scale: {
     zoom: 2
   },

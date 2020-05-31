@@ -10,7 +10,8 @@ module.exports = {
     contentBase: path.join(__dirname, '../src/assets'),
     port: 3000,
     proxy: {
-      '/api': 'http://localhost:8080'
+      '/api': 'http://localhost:8080',
+      '/survey': 'http://localhost:8080'
     }
   },
   module: {

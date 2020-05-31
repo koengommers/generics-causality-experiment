@@ -1,0 +1,95 @@
+<style>
+  .form {
+    background-color: #fff;
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    padding: 20px;
+    border-radius: 5px;
+    width: 500px;
+    box-sizing: border-box;
+    font-size: 10px;
+  }
+
+  .form-options.generic {
+    display: flex;
+    text-align: center;
+  }
+
+  .form-options.generic div {
+    width: 20%;
+  }
+
+  .form-options.generic input {
+    display: block;
+    margin: 0 auto 10px;
+  }
+
+  .form-submit {
+    text-align: right;
+  }
+
+  input[type=submit] {
+    background-color: #222;
+    box-shadow: none;
+    color: #fff;
+    font-family: inherit;
+    font-size: inherit;
+    border: 0;
+    margin-top: 10px;
+    padding: 6px 10px;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  .bottom {
+    margin-top: 20px;
+  }
+
+  input[type=range] {
+    display: inline-block;
+  }
+
+  p {
+    font-size: 10px;
+    margin-top: 0;
+  }
+
+  .bottom {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  #error {
+    color: red;
+    margin-bottom: 5px;
+  }
+</style>
+
+<form class="form">
+  <p>
+    Welcome!<br>
+    Thank you for taking interest in this study!
+  </p>
+  <p>
+    We invite you to participate in a research study on language production and comprehension. In this survey you will be asked to judge whether sentences can be correctly asserted in a given scenario.
+  </p>
+  <p>
+    Completing the survey will take you approximately 12 minutes.
+  </p>
+  <p>
+    Please complete this survey in one go. In other words, please only participate in this survey, if you have 10 to 15 minutes that you can dedicate to it.
+  </p>
+  <p>
+    If you would like to contact the Principal Investigator in the study to discuss this research, please e-mail r.a.m.vanrooij@uva.nl.
+  </p>
+  <p>
+    Consent form:<br>
+    I understand that all data will be kept confidential by the researcher. My personal information will not be stored with the data. I am free to withdraw at any time without giving a reason.
+  </p>
+  <p>
+    I consent to the publication of study results as long as the information is anonymous so that no identification of participants can be made.
+  </p>
+
+  <input type="checkbox" name="consent" id="consent"><label for="consent">I have read and understand the explanations and I voluntarily consent to participate in this study.</label>
+  <div id="error"></div>
+  <input type="submit" value="Start">
+</form>

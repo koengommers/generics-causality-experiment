@@ -1,0 +1,91 @@
+<style>
+  .form {
+    background-color: #fff;
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    padding: 20px;
+    border-radius: 5px;
+    width: 500px;
+    box-sizing: border-box;
+    font-size: 12px;
+  }
+
+  .form-options.generic {
+    display: flex;
+    text-align: center;
+  }
+
+  .form-options.generic div {
+    width: 20%;
+  }
+
+  .form-options.generic input {
+    display: block;
+    margin: 0 auto 10px;
+  }
+
+  .form-submit {
+    text-align: right;
+  }
+
+  input[type=submit] {
+    background-color: #222;
+    box-shadow: none;
+    color: #fff;
+    font-family: inherit;
+    font-size: inherit;
+    border: 0;
+    padding: 6px 10px;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  .bottom {
+    margin-top: 20px;
+  }
+
+  input[type=range] {
+    display: inline-block;
+  }
+
+  p {
+    font-size: 12px;
+    margin-top: 0;
+  }
+
+  .bottom {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  #error {
+    color: red;
+    margin-bottom: 5px;
+  }
+</style>
+
+<form class="form">
+  <p><strong>{{ question }}</strong></p>
+  <div id="error"></div>
+  <input type="range" min="0" max="100" value="50" step="5" id="slider" name="response">
+  <span id="proportion">50%</span>
+
+  <div class="bottom">
+    <div class="counter">
+      Question {{ index }} / {{ length }}
+    </div>
+
+    <div class="form-submit">
+      <input type="submit" value="Next" name="next-button">
+    </div>
+  </div>
+
+  <script>
+    const slider = document.getElementById('slider');
+    const output = document.getElementById('proportion');
+    output.innerHTML = slider.value + '%';
+
+    slider.oninput = function() {
+      output.innerHTML = this.value + '%';
+    }
+  </script>
+</form>
