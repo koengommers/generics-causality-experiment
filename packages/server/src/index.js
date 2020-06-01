@@ -23,6 +23,10 @@ app.get('/survey/introduction', async (req, res) => {
   res.render('introduction.html');
 });
 
+app.get('/survey/finish', async (req, res) => {
+  res.render('finish.html');
+});
+
 app.get('/survey/finish/:completionCode', async (req, res) => {
   res.render('finish.html', { completionCode: req.params.completionCode });
 });
@@ -111,9 +115,12 @@ app.post('/api/submissions/', async (req, res) => {
   // TODO: Save responses in database
   console.log(participationId, responses);
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let completionCode = '';
-  for (let i = 8; i > 0; i--) {
-    completionCode += chars[Math.floor(Math.random() * chars.length)];
+  let completionCode;
+  if (participationId) {
+    completionCode = '';
+    for (let i = 8; i > 0; i--) {
+      completionCode += chars[Math.floor(Math.random() * chars.length)];
+    }
   }
   return res.json({ completionCode });
 });

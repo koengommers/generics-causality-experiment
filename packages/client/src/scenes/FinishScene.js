@@ -10,7 +10,11 @@ export default class FinishScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.html('finish', `survey/finish/${this.completionCode}`);
+    if (this.completionCode) {
+      this.load.html('finish', `survey/finish/${this.completionCode}`);
+    } else {
+      this.load.html('finish', `survey/finish`);
+    }
   }
 
   create() {
