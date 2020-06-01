@@ -5,7 +5,7 @@ export default class FormScene extends Phaser.Scene {
   constructor() {
     super('form-scene');
     this.responses = {};
-    this.questions = 13;
+    this.questions = 14;
   }
 
   preload() {
@@ -20,30 +20,29 @@ export default class FormScene extends Phaser.Scene {
   }
 
   create() {
+    this.input.keyboard.removeCapture('W,A,D,SPACE');
+
     const element = this.add.dom(this.game.config.width/2, this.game.config.height/2).createFromCache(`question-${this.question}`);
 
     element.addListener('input');
     element.on('input', (event) => {
       const slider = document.getElementById('slider');
-      const output = document.getElementById('proportion');
-      output.innerHTML = slider.value + '%';
+      if (slider) {
+        const output = document.getElementById('proportion');
+        output.innerHTML = slider.value + '%';
+      }
     });
 
     element.addListener('submit');
     element.on('submit', (event) => {
       event.preventDefault();
       const data = new FormData(event.target);
-      const response = parseInt(data.get('response'));
-      if (response) {
-        this.responses[this.question] = response;
-        if (this.question < this.questions) {
-          this.scene.restart({ question: this.question + 1 });
-        } else {
-          this.submit();
-        }
+      const response = data.get('response');
+      this.responses[this.question] = response;
+      if (this.question < this.questions) {
+        this.scene.restart({ question: this.question + 1 });
       } else {
-        const errorElement = document.getElementById('error');
-        errorElement.innerHTML = 'Please fill in an answer to continue.'
+        this.submit();
       }
     });
   }

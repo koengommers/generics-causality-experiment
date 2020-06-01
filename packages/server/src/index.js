@@ -89,6 +89,8 @@ app.get('/survey/question/:id', async (req, res) => {
       question: 'How many of the cars do you think are gold?'
     }
   }, {
+    template: 'feedback.html'
+  }, {
     template: 'attention.html'
   }];
   const question = questions[req.params.id-1];
