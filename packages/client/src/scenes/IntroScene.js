@@ -12,16 +12,14 @@ export default class IntroScene extends Phaser.Scene {
   create() {
     const element = this.add.dom(this.game.config.width/2, this.game.config.height/2).createFromCache('introduction');
 
-    element.addListener('submit');
-    element.on('submit', (event) => {
+    element.addListener('click');
+    element.on('click', (event) => {
       event.preventDefault();
-      const data = new FormData(event.target);
-      const consent = data.get('consent');
-      if (consent) {
+      if (event.target.id === 'accept') {
         this.scene.start('start-scene');
-      } else {
-        const errorElement = document.getElementById('error');
-        errorElement.innerHTML = 'If you do not consent you cannot participate in this study. Please close this tab in your browser to exit the survey.'
+      } else if (event.target.id === 'reject') {
+        const form = document.getElementById('form');
+        form.innerHTML = 'Thank you for your interest in this study! Please close this tab in your browser to exit the survey.';
       }
     });
   }

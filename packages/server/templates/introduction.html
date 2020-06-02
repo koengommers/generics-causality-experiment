@@ -62,9 +62,14 @@
     color: red;
     margin-bottom: 5px;
   }
+
+  a {
+    display: block;
+    margin-top: 10px;
+  }
 </style>
 
-<form class="form">
+<div class="form" id="form">
   <p>
     Welcome!<br>
     Thank you for taking interest in this study!
@@ -89,7 +94,6 @@
     I consent to the publication of study results as long as the information is anonymous so that no identification of participants can be made.
   </p>
 
-  <input type="checkbox" name="consent" id="consent"><label for="consent">I have read and understand the explanations and I voluntarily consent to participate in this study.</label>
-  <div id="error"></div>
-  <input type="submit" value="Start">
+  <a href="#" id="accept">I have read and understand the explanations and I voluntarily consent to participate in this study.</a>
+  <a href="#" id="reject">I do not consent to participate in this study.</a>
 </form>
