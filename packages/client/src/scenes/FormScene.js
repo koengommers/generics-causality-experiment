@@ -57,7 +57,8 @@ export default class FormScene extends Phaser.Scene {
       },
       body: JSON.stringify({
         participationId,
-        responses: this.responses
+        responses: this.responses,
+        time: Date.now() - window.startTime
       })
     }).then((response) => {
       response.json().then((data) => {

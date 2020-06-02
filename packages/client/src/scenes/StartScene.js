@@ -9,9 +9,14 @@ Before we start, please maximize this page on your browser so that it is in full
 During the study, use the arrow keys to control the character. Press an arrow key to start.
 `;
 
+
 export default class StartScene extends Phaser.Scene {
   constructor() {
     super('start-scene');
+  }
+
+  init() {
+    window.startTime = Date.now();
   }
 
   create() {

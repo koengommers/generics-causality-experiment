@@ -111,9 +111,9 @@ app.get('/api/submissions/', async (req, res) => {
 });
 
 app.post('/api/submissions/', async (req, res) => {
-  const { participationId, responses } = req.body;
+  const { participationId, responses, time } = req.body;
   // TODO: Save responses in database
-  console.log(participationId, responses);
+  console.log(participationId, responses, time);
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let completionCode;
   if (participationId) {
