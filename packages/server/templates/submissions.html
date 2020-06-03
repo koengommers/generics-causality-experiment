@@ -1,0 +1,37 @@
+<form id="form">
+  <label for="password">Password:</label>
+  <input type="password" name="password">
+  <button>Download</button>
+</form>
+<script>
+  function download(event) {
+    let filename;
+
+    event.preventDefault();
+    const data = new FormData(event.target);
+    const password = data.get('password');
+  
+    fetch('/survey/submissions/download', {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Basic ' + window.btoa('admin:' + password)
+      }
+    }).then((response) => {
+      const contentDisposition = response.headers.get('content-disposition');
+      filename = contentDisposition.match(/filename="(.*\.csv)"/)[1];
+      return response.blob();
+    }).then((blob) => {
+      const objectUrl = window.URL.createObjectURL(blob);
+
+      const anchor = document.createElement('a');
+      anchor.href = objectUrl;
+      anchor.download = filename;
+      anchor.click();
+
+      window.URL.revokeObjectURL(objectUrl);
+    });
+  }
+
+  const form = document.getElementById('form');
+  form.addEventListener('submit', download);
+</script>

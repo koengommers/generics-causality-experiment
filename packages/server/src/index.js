@@ -2,10 +2,15 @@ import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import knex from 'knex';
+import basicAuth from 'express-basic-auth';
+import { parse as json2csv } from 'json2csv';
+import dotenv from 'dotenv';
 
 import knexfile from '../knexfile';
 
 const db = knex(knexfile);
+
+dotenv.config()
 
 const app = express();
 const port = 8080;
@@ -105,12 +110,20 @@ app.get('/survey/question/:id', async (req, res) => {
   });
 });
 
-app.get('/api/submissions/', async (req, res) => {
-  const submissions = await db('submissions');
-  res.json(submissions);
+app.get('/survey/submissions/', (req, res) => {
+  res.render('submissions.html');
 });
 
-app.post('/api/submissions/', async (req, res) => {
+app.get('/survey/submissions/download', basicAuth({ users: { 'admin': process.env.ADMIN_PASS }}), async (req, res) => {
+  const submissions = await db('submissions');
+  const csv = json2csv(submissions);
+  const date = new Date();
+  const downloadTime = `${date.toISOString().split('T')[0]}-${date.getHours()}h${date.getMinutes()}`;
+  res.attachment(`submissions-${downloadTime}.csv`)
+  res.send(csv);
+});
+
+app.post('/survey/submissions/', async (req, res) => {
   const { participationId, responses, time } = req.body;
   // TODO: Save responses in database
   console.log(participationId, responses, time);

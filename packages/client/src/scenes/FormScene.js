@@ -50,7 +50,7 @@ export default class FormScene extends Phaser.Scene {
   submit() {
     const urlParams = new URLSearchParams(window.location.search);
     const participationId = urlParams.get('pid');
-    fetch('/api/submissions', {
+    fetch('/survey/submissions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
