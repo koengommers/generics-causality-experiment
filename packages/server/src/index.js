@@ -8,7 +8,7 @@ import dotenv from 'dotenv';
 
 import knexfile from '../knexfile';
 
-const db = knex(knexfile);
+const db = knex(knexfile[process.env.NODE_ENV || 'development']);
 
 dotenv.config()
 
