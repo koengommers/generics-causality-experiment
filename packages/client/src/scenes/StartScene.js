@@ -6,7 +6,9 @@ In this study, we would like you to learn about the country of Farland. Everythi
 
 Before we start, please maximize this page on your browser so that it is in full screen and make sure that you can, as much as possible, do the rest of the study in a calm environment without distractions or interruptions. 
 
-During the study, use the arrow keys to control the character. Press an arrow key to start.
+During the study, use the arrow keys to control the character.
+
+Click to continue.
 `;
 
 
@@ -39,11 +41,8 @@ export default class StartScene extends Phaser.Scene {
     const speaker = this.add.sprite(text.x - text.width/2 + 2, 20, 'police-man').setScale(2);
     speaker.setOrigin(0.5, 0);
 
-    const keys = ['W', 'A', 'S', 'D', 'UP', 'LEFT', 'RIGHT', 'DOWN']
-    keys.forEach((key) => {
-      this.input.keyboard.once(`keydown-${key}`, () => {
-        this.scene.start('show-scene');
-      });
+    this.input.on('pointerdown', () => {
+      this.scene.start('show-scene');
     });
   }
 }
