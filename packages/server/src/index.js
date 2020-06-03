@@ -118,7 +118,7 @@ app.get('/survey/submissions/download', basicAuth({ users: { 'admin': process.en
   const submissions = await db('submissions');
   const csv = json2csv(submissions);
   const date = new Date();
-  const downloadTime = `${date.toISOString().split('T')[0]}-${date.getHours()}h${date.getMinutes()}`;
+  const downloadTime = `${date.toISOString().split('T')[0]}-${date.getUTCHours()}h${date.getUTCMinutes()}`;
   res.attachment(`submissions-${downloadTime}.csv`)
   res.send(csv);
 });
