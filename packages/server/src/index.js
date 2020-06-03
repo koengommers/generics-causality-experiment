@@ -104,7 +104,7 @@ app.get('/survey/question/:id', async (req, res) => {
   }];
   const question = questions[req.params.id-1];
   res.render(question.template, {
-    index: parseInt(req.params.id),
+    index: req.query.index ? parseInt(req.query.index) : parseInt(req.params.id),
     length: questions.length,
     ...question.context
   });

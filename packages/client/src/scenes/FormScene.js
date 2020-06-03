@@ -5,24 +5,75 @@ export default class FormScene extends Phaser.Scene {
   constructor() {
     super('form-scene');
     this.responses = {};
-    this.questions = 14;
+    const genericQuestions = [{
+      name: 'generic-1',
+      url: 'survey/question/1'
+    }, {
+      name: 'generic-2',
+      url: 'survey/question/2'
+    }, {
+      name: 'generic-3',
+      url: 'survey/question/3'
+    }, {
+      name: 'generic-4',
+      url: 'survey/question/4'
+    }];
+    const existentialQuestions = [{
+      name: 'existential-1',
+      url: 'survey/question/5'
+    }, {
+      name: 'existential-2',
+      url: 'survey/question/6'
+    }, {
+      name: 'existential-3',
+      url: 'survey/question/7'
+    }, {
+      name: 'existential-4',
+      url: 'survey/question/8'
+    }];
+    const probabilityQuestions = [{
+      name: 'probability-1',
+      url: 'survey/question/9'
+    }, {
+      name: 'probability-2',
+      url: 'survey/question/10'
+    }, {
+      name: 'probability-3',
+      url: 'survey/question/11'
+    }, {
+      name: 'probability-4',
+      url: 'survey/question/12'
+    }];
+    const otherQuestions = [{
+      name: 'feedback',
+      url: 'survey/question/13'
+    }, {
+      name: 'attention',
+      url: 'survey/question/14'
+    }];
+    this.questions = _.concat(_.shuffle(genericQuestions), _.shuffle(existentialQuestions), _.shuffle(probabilityQuestions), otherQuestions);
+    this.questions = _.map(this.questions, (question, i) => {
+      question.url = `${question.url}?index=${i+1}`;
+      return question;
+    });
   }
 
   preload() {
-    _.each(_.range(1, this.questions+1), (id) => {
-      this.load.html(`question-${id}`, `survey/question/${id}`);
+    _.each(this.questions, (question) => {
+      this.load.html(question.name, question.url);
     });
   }
 
   init(props) {
     const { question = 1 } = props;
-    this.question = question;
+    this.questionNumber = question;
+    this.question = this.questions[question-1];
   }
 
   create() {
     this.input.keyboard.removeCapture('W,A,D,SPACE');
 
-    const element = this.add.dom(this.game.config.width/2, this.game.config.height/2).createFromCache(`question-${this.question}`);
+    const element = this.add.dom(this.game.config.width/2, this.game.config.height/2).createFromCache(this.question.name);
 
     element.addListener('input');
     element.on('input', (event) => {
@@ -38,9 +89,9 @@ export default class FormScene extends Phaser.Scene {
       event.preventDefault();
       const data = new FormData(event.target);
       const response = data.get('response');
-      this.responses[this.question] = response;
-      if (this.question < this.questions) {
-        this.scene.restart({ question: this.question + 1 });
+      this.responses[this.question.name] = response;
+      if (this.questionNumber < this.questions.length) {
+        this.scene.restart({ question: this.questionNumber + 1 });
       } else {
         this.submit();
       }
