@@ -5,7 +5,8 @@
   "scripts": {
     "start": "nodemon --exec babel-node src/index.js",
     "build": "babel src/ -d dist/",
-    "serve": "knex migrate:latest && node dist/index.js"
+    "serve": "node dist/index.js",
+    "migrate": "knex migrate:latest"
   },
   "dependencies": {
     "@babel/runtime": "^7.9.6",
