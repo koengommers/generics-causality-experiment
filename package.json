@@ -2,8 +2,7 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "heroku-prebuild": "npm install && lerna bootstrap",
-    "build": "lerna run build",
+    "build": "lerna bootstrap && lerna run build",
     "heroko-postbuild": "knex migrate:latest",
     "start": "node packages/server/dist/index.js"
   },
