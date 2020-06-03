@@ -124,9 +124,6 @@ app.get('/survey/submissions/download', basicAuth({ users: { 'admin': process.en
 });
 
 app.post('/survey/submissions/', async (req, res) => {
-  const { participationId, responses, time } = req.body;
-  // TODO: Save responses in database
-  console.log(participationId, responses, time);
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let completionCode;
   if (participationId) {
@@ -135,6 +132,15 @@ app.post('/survey/submissions/', async (req, res) => {
       completionCode += chars[Math.floor(Math.random() * chars.length)];
     }
   }
+
+  const { participationId, responses, time } = req.body;
+  const submission = {
+    ...responses,
+    participationId,
+    completionCode,
+    timeTaken: time
+  }
+  await db('submissions').insert(submission);
   return res.json({ completionCode });
 });
 
