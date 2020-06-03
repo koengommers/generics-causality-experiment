@@ -22,6 +22,7 @@ export default class TownScene extends Phaser.Scene {
 
     const ground = this.createGround();
     this.createLevel();
+    this.createPause();
 
     this.player = this.createPlayer();
     this.keys = this.createInput();
@@ -32,7 +33,7 @@ export default class TownScene extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, this.level.width*16, this.game.config.height);
 
     this.cameras.main.startFollow(this.player, true, undefined, undefined, -16*16, 0);
-    this.cameras.main.fadeIn(1000, 23, 21, 21);
+    // this.cameras.main.fadeIn(1000, 23, 21, 21);
   }
 
   createPlayer() {
@@ -119,7 +120,7 @@ export default class TownScene extends Phaser.Scene {
         item.trees.forEach((tree) => {
           const treeX = x*16 + tree.x;
           const y = this.game.config.height - 3*16 + tree.y;
-          this.add.sprite(treeX, y, tree.sprite).setOrigin(0.5, 1).depth = 999;
+          this.add.sprite(treeX, y, tree.sprite).setOrigin(0.5, 1).depth = 1;
         });
         x += 8;
       }
@@ -147,6 +148,59 @@ export default class TownScene extends Phaser.Scene {
       'w': Phaser.Input.Keyboard.KeyCodes.W,
       'space': Phaser.Input.Keyboard.KeyCodes.SPACE
     });
+  }
+
+  createPause() {
+    const texts = {
+      2: `
+We hope you are enjoying exploring Farland!
+Remember that in Farland, the green pointy trees are called truce trees and the pink round trees are called naple trees. Also, the brown houses are wooden houses and the white houses are brick houses.
+
+Click to continue.
+      `,
+      4: `
+You only have two towns left to visit! 
+Just to remind you, in Farland, the trucks have a large open back and the cars have a small closed trunk. Also, women like to wear their hair long and the men wear red vests.
+
+Click to continue.
+      `
+    }
+    if (this.currentLevel === 2 || this.currentLevel === 4) {
+      const overlay = this.add.rectangle(0, 0, this.game.config.width, this.game.config.height, 0x171515, 0.8);
+      overlay.setOrigin(0, 0);
+      overlay.setScrollFactor(0);
+      overlay.depth = 2;
+
+      const text = this.add.text(this.game.config.width/2, this.game.config.height/2, texts[this.currentLevel], {
+        fontSize: '14px',
+        backgroundColor: '#fff',
+        color: '#222',
+        padding: {
+          top: 10,
+          left: 30,
+          right: 10,
+          bottom: 10
+        },
+        wordWrap: {
+          width: 400
+        }
+      });
+      text.setOrigin(0.5, 0.5);
+      text.setScrollFactor(0);
+      text.depth = 2;
+
+      const speaker = this.add.sprite(text.x - text.width/2 + 2, text.y - text.height/2 + 10, 'police-man').setScale(2);
+      speaker.setOrigin(0.5, 0);
+      speaker.depth = 2;
+
+      this.scene.pause();
+      this.game.canvas.addEventListener('mousedown', () => {
+        speaker.destroy();
+        text.destroy();
+        overlay.destroy();
+        this.scene.resume();
+      });
+    }
   }
 
   update() {
