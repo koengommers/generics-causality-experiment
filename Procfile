@@ -1,1 +1,1 @@
-web: node packages/server/dist/index.js
+web: lerna run --scope server start
