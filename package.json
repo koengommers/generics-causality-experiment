@@ -3,8 +3,8 @@
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "build": "lerna run build",
-    "postinstall": "npm run bootstrap",
+    "build-all": "lerna run build",
+    "postinstall": "npm run bootstrap && npm run build-all",
     "heroko-postbuild": "knex migrate:latest",
     "start": "node packages/server/dist/index.js"
   },
