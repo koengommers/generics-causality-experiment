@@ -2,7 +2,9 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "build": "lerna bootstrap && lerna run build",
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run build",
+    "postinstall": "npm run bootstrap",
     "heroko-postbuild": "knex migrate:latest",
     "start": "node packages/server/dist/index.js"
   },
