@@ -17,7 +17,8 @@ Let’s start with the trees: The trees that grow in Farland are either truce tr
       }, {
         name: 'Naple trees',
         sprites: ['tree-pink-small', 'tree-pink-large']
-      }]
+      }],
+      scale: 2
     }, {
       text: `
 Here is what the people living in Farland tend to look like. Because of a genetic mutation, you might notice that men and women in this country have interesting skin colors.
@@ -28,7 +29,8 @@ Here is what the people living in Farland tend to look like. Because of a geneti
       }, {
         name: 'Women',
         sprites: ['person-woman-green', 'person-woman-blue']
-      }]
+      }],
+      scale: 2
     }, {
       text: `
 In Farland, there are both brick houses and wooden houses. As you'll see, their roofs are decorated in a variety of patterns.
@@ -39,7 +41,8 @@ In Farland, there are both brick houses and wooden houses. As you'll see, their 
       }, {
         name: 'Wooden houses',
         sprites: ['house-wood-tiles-2', 'house-wood-dotted-1']
-      }]
+      }],
+      scale: 1
     }, {
       text: `
 The automotive industry in Farland produces both cars and trucks, which are painted in a range of different colors.
@@ -50,7 +53,8 @@ The automotive industry in Farland produces both cars and trucks, which are pain
       }, {
         name: 'Trucks',
         sprites: ['vehicle-truck-red', 'vehicle-truck-gold']
-      }]
+      }],
+      scale: 1
     }];
   }
 
@@ -83,10 +87,10 @@ The automotive industry in Farland produces both cars and trucks, which are pain
       const centerX = this.game.config.width/2 + 160*(index ? 1 : -1);
 
       object.sprites.forEach((sprite, index) => {
-        this.add.sprite(centerX + (index ? 10 : -10), centerY - 10, sprite).setOrigin(index ? 0 : 1, 1);
+        this.add.sprite(centerX + (index ? 10 : -10), centerY - 10, sprite).setOrigin(index ? 0 : 1, 1).setScale(this.group.scale);
       })
       this.add.text(centerX, centerY + 10, object.name, {
-        fontSize: '14px',
+        fontSize: '18px',
         color: '#fff'
       }).setOrigin(0.5, 0);
     });
