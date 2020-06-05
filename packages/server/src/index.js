@@ -80,22 +80,22 @@ app.get('/survey/question/:id', async (req, res) => {
   }, {
     template: 'proportion.html',
     context: {
-      question: 'How many of the men do you think are blue?'
+      question: 'What proportion of the men do you think are blue?'
     }
   }, {
     template: 'proportion.html',
     context: {
-      question: 'How many of the wooden houses do you think have polka dots?'
+      question: 'What proportion of the wooden houses do you think have polka dots?'
     }
   }, {
     template: 'proportion.html',
     context: {
-      question: 'How many of the truce trees do you think are small?'
+      question: 'What proportion of the truce trees do you think are small?'
     }
   }, {
     template: 'proportion.html',
     context: {
-      question: 'How many of the cars do you think are gold?'
+      question: 'What proportion of the cars do you think are gold?'
     }
   }, {
     template: 'feedback.html'
