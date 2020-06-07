@@ -237,7 +237,7 @@ Click to continue.
   }
 
   updatePlayer() {
-    const velocity = 80;
+    const velocity = 60;
 
     if (this.keys.left.isDown || this.keys.a.isDown) {
       this.player.setVelocityX(-velocity);
