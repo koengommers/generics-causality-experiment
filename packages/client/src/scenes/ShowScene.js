@@ -95,25 +95,16 @@ The automotive industry in Farland produces both cars and trucks, which are pain
       }).setOrigin(0.5, 0);
     });
 
-    if (this.index < this.groups.length - 1) {
-      this.add.text(this.game.config.width/2, this.game.config.height-10, 'Click to continue.', {
-        fontSize: '12px',
-        color: '#fff',
-      }).setOrigin(0.5, 1);
-      this.input.on('pointerdown', () => {
+    this.add.text(this.game.config.width/2, this.game.config.height-10, 'Click to continue.', {
+      fontSize: '12px',
+      color: '#fff',
+    }).setOrigin(0.5, 1);
+    this.input.on('pointerdown', () => {
+      if (this.index < this.groups.length - 1) {
         this.scene.restart({ index: this.index + 1});
-      });
-    } else {
-      this.add.text(this.game.config.width/2, this.game.config.height-10, 'Press an arrow key to enter Farland.', {
-        fontSize: '12px',
-        color: '#fff',
-      }).setOrigin(0.5, 1);
-      const keys = ['W', 'A', 'S', 'D', 'UP', 'LEFT', 'RIGHT', 'DOWN'];
-      keys.forEach((key) => {
-        this.input.keyboard.once(`keydown-${key}`, () => {
-          this.scene.start('town-scene');
-        });
-      });
-    }
+      } else {
+        this.scene.start('town-scene');
+      }
+    });
   }
 }

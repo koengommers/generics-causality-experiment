@@ -152,6 +152,11 @@ export default class TownScene extends Phaser.Scene {
 
   createPause() {
     const texts = {
+      1: `
+You have arrived in the first town. Using the arrow keys, walk through it and explore! When you have seen everything, go all the way to the right to move onto the next town. Once you leave a town, you won't be able to come back.
+
+Click to start.
+      `,
       2: `
 We hope you are enjoying exploring Farland!
 Remember that in Farland, the green pointy trees are called truce trees and the pink round trees are called naple trees. Also, the brown houses are wooden houses and the white houses are brick houses.
@@ -165,7 +170,7 @@ Just to remind you, in Farland, the trucks have a large open back and the cars h
 Click to continue.
       `
     }
-    if (this.currentLevel === 2 || this.currentLevel === 4) {
+    if (this.currentLevel in texts) {
       const overlay = this.add.rectangle(0, 0, this.game.config.width, this.game.config.height, 0x171515, 0.8);
       overlay.setOrigin(0, 0);
       overlay.setScrollFactor(0);

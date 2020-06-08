@@ -1,12 +1,10 @@
 import Phaser from 'phaser';
 
 const INTRO_TEXT = `
-Welcome to Farland! 
-In this study, we would like you to learn about the country of Farland. Everything is a bit different here, so please pay attention to what you see. You will be able to explore the five main towns in the country and then we will ask you some questions about what you observed during your visit. 
+Welcome to Farland!
+In this study, we would like you to learn about the country of Farland. Everything is a bit different here, so please pay attention to what you see. You will be able to explore the five main towns in the country and then we will ask you some questions about what you observed during your visit.
 
-Before we start, please maximize this page on your browser so that it is in full screen and make sure that you can, as much as possible, do the rest of the study in a calm environment without distractions or interruptions. 
-
-During the study, use the arrow keys to control the character.
+Before we start, please maximize this page on your browser so that it is in full screen and make sure that you can, as much as possible, do the rest of the study in a calm environment without distractions or interruptions.
 
 Click to continue.
 `;
