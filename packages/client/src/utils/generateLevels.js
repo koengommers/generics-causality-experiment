@@ -19,42 +19,42 @@ const FOREGROUND_WIDTHS = {
 const LEVELS_CONFIG = {
   buildings: [{
     sprite: ['house-wood-dotted-1', 'house-wood-dotted-2'],
-    number: 8*2
+    number: 8*4
   }, {
     sprite: ['house-wood-tiles-1', 'house-wood-tiles-2'],
-    number: 2*2
+    number: 2*4
   }, {
     sprite: ['house-brick-dotted-1', 'house-brick-dotted-2'],
-    number: 2*2
+    number: 2*4
   }, {
     sprite: ['house-brick-tiles-1', 'house-brick-tiles-2'],
-    number: 8*2
+    number: 8*4
   }],
   cars: [{
     sprite: ['vehicle-truck-gold'],
-    number: 8*2
+    number: 8*4
   }, {
     sprite: ['vehicle-truck-red'],
-    number: 2*2
+    number: 2*4
   }, {
     sprite: ['vehicle-car-gold'],
-    number: 2*2
+    number: 2*4
   }, {
     sprite: ['vehicle-car-red'],
-    number: 8*2
+    number: 8*4
   }],
   trees: [{
     sprite: 'tree-pink-small',
-    number: 8*2
+    number: 8*4
   }, {
     sprite: 'tree-pink-large',
-    number: 2*2
+    number: 2*4
   }, {
     sprite: 'tree-green-small',
-    number: 2*2
+    number: 2*4
   }, {
     sprite: 'tree-green-large',
-    number: 8*2
+    number: 8*4
   }],
   people: [{
     sprite: 'person-man-blue',
