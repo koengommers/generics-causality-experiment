@@ -49,10 +49,10 @@ The automotive industry in Farland produces both cars and trucks, which are pain
       `,
       objects: [{
         name: 'Cars',
-        sprites: ['vehicle-car-red', 'vehicle-car-gold']
+        sprites: ['vehicle-car-red', 'vehicle-car-yellow']
       }, {
         name: 'Trucks',
-        sprites: ['vehicle-truck-red', 'vehicle-truck-gold']
+        sprites: ['vehicle-truck-red', 'vehicle-truck-yellow']
       }],
       scale: 1
     }];

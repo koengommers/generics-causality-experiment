@@ -31,13 +31,13 @@ const LEVELS_CONFIG = {
     number: 8*4
   }],
   cars: [{
-    sprite: ['vehicle-truck-gold'],
+    sprite: ['vehicle-truck-yellow'],
     number: 8*4
   }, {
     sprite: ['vehicle-truck-red'],
     number: 2*4
   }, {
-    sprite: ['vehicle-car-gold'],
+    sprite: ['vehicle-car-yellow'],
     number: 2*4
   }, {
     sprite: ['vehicle-car-red'],

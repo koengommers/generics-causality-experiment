@@ -45,7 +45,7 @@ app.get('/survey/question/:id', async (req, res) => {
   }, {
     template: 'generic.html',
     context: {
-      question: 'Trucks are gold.'
+      question: 'Trucks are yellow.'
     }
   }, {
     template: 'generic.html',
@@ -65,7 +65,7 @@ app.get('/survey/question/:id', async (req, res) => {
   }, {
     template: 'generic.html',
     context: {
-      question: 'There are trucks that are gold.'
+      question: 'There are trucks that are yellow.'
     }
   }, {
     template: 'generic.html',
@@ -95,7 +95,7 @@ app.get('/survey/question/:id', async (req, res) => {
   }, {
     template: 'proportion.html',
     context: {
-      question: 'What proportion of the cars do you think are gold?'
+      question: 'What proportion of the cars do you think are yellow?'
     }
   }, {
     template: 'feedback.html'
