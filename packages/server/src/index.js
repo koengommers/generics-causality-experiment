@@ -133,12 +133,12 @@ app.post('/survey/submissions/', async (req, res) => {
     }
   }
 
-  const { participationId, responses, time } = req.body;
+  const { participationId, responses, duration } = req.body;
   const submission = {
     ...responses,
     participationId,
     completionCode,
-    timeTaken: time
+    duration
   }
   await db('submissions').insert(submission);
   return res.json({ completionCode });

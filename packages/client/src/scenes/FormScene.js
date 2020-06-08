@@ -6,42 +6,42 @@ export default class FormScene extends Phaser.Scene {
     super('form-scene');
     this.responses = {};
     const genericQuestions = [{
-      name: 'generic-1',
+      name: 'generic-trees',
       url: 'survey/question/1'
     }, {
-      name: 'generic-2',
+      name: 'generic-vehicles',
       url: 'survey/question/2'
     }, {
-      name: 'generic-3',
+      name: 'generic-roofs',
       url: 'survey/question/3'
     }, {
-      name: 'generic-4',
+      name: 'generic-people',
       url: 'survey/question/4'
     }];
     const existentialQuestions = [{
-      name: 'existential-1',
+      name: 'existential-trees',
       url: 'survey/question/5'
     }, {
-      name: 'existential-2',
+      name: 'existential-vehicles',
       url: 'survey/question/6'
     }, {
-      name: 'existential-3',
+      name: 'existential-roofs',
       url: 'survey/question/7'
     }, {
-      name: 'existential-4',
+      name: 'existential-people',
       url: 'survey/question/8'
     }];
     const probabilityQuestions = [{
-      name: 'probability-1',
+      name: 'proportion-people-high',
       url: 'survey/question/9'
     }, {
-      name: 'probability-2',
+      name: 'proportion-roofs-high',
       url: 'survey/question/10'
     }, {
-      name: 'probability-3',
+      name: 'proportion-trees-low',
       url: 'survey/question/11'
     }, {
-      name: 'probability-4',
+      name: 'proportion-vehicles-low',
       url: 'survey/question/12'
     }];
     const otherQuestions = [{
@@ -109,7 +109,7 @@ export default class FormScene extends Phaser.Scene {
       body: JSON.stringify({
         participationId,
         responses: this.responses,
-        time: Date.now() - window.startTime
+        duration: Date.now() - window.startTime
       })
     }).then((response) => {
       response.json().then((data) => {
