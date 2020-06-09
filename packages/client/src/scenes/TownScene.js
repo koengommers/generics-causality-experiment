@@ -105,12 +105,14 @@ export default class TownScene extends Phaser.Scene {
         this.add.sprite(rightX - 9, this.game.config.height - 112, 'park-trashcan').setOrigin(1, 1);
 
         item.people.forEach(personSprite => {
-          const person = this.people.create(_.random(leftX+8, rightX-8), this.game.config.height - 112, personSprite).setOrigin(0.5, 1);
-          person.body.setAllowGravity(false);
-          person.maxLeft = leftX + 8;
-          person.maxRight = rightX - 8;
-          person.setCollideWorldBounds(true);
-          person.setVelocityX(_.random(-1, 1)*20);
+          if (personSprite) {
+            const person = this.people.create(_.random(leftX+8, rightX-8), this.game.config.height - 112, personSprite).setOrigin(0.5, 1);
+            person.body.setAllowGravity(false);
+            person.maxLeft = leftX + 8;
+            person.maxRight = rightX - 8;
+            person.setCollideWorldBounds(true);
+            person.setVelocityX(_.random(-1, 1)*20);
+          }
         });
 
         this.add.sprite(leftX - 1, this.game.config.height - 112, 'park-fence').setOrigin(0, 1);

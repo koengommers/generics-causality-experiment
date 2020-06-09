@@ -59,16 +59,16 @@ const LEVELS_CONFIG = {
   }],
   people: [{
     sprite: 'person-man-blue',
-    number: 8*2
+    number: 8*4
   }, {
     sprite: 'person-man-green',
-    number: 2*2
+    number: 2*4
   }, {
     sprite: 'person-woman-blue',
-    number: 2*2
+    number: 2*4
   }, {
     sprite: 'person-woman-green',
-    number: 8*2
+    number: 8*4
   }]
 };
 
@@ -105,8 +105,8 @@ function generateBackground(n) {
     }));
   }
   people = people.map((level) => {
-    const parks = _.shuffle(_.assign(_.fill(new Array(_.ceil(level.length / 4)*4), null), level));
-    return _.chunk(parks, 4);
+    const parks = _.shuffle(_.assign(_.fill(new Array(_.ceil(level.length / 6)*6), null), level));
+    return _.chunk(parks, 6);
   });
 
   return _.zipWith(buildings, people, (houses, parks) => {
