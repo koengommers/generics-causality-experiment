@@ -166,7 +166,7 @@ export default class TownScene extends Phaser.Scene {
   createPause() {
     const texts = {
       1: `
-You have arrived in the first town. Using the arrow keys, walk through it and explore! When you have seen everything, go all the way to the right to move onto the next town. Once you leave a town, you won't be able to come back.
+You have arrived in the first town. Using the arrow keys, walk through it and explore! Please take your time exploring the towns and make sure to pay attention to everything you see. When you have seen everything, go all the way to the right to move onto the next town. Once you leave a town, you won't be able to come back.
 
 Click to start.
       `,
