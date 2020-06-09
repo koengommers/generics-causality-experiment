@@ -1,1 +1,1 @@
-web: lerna run --scope server start
+web: lerna run --scope server serve
