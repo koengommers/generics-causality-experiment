@@ -13,8 +13,8 @@ const BACKGROUND_WIDTHS = {
 }
 
 const FOREGROUND_WIDTHS = {
-  'parking': 14,
-  'forest': 8
+  'parking': 16,
+  'forest': 10
 }
 
 const LEVELS_CONFIG = {
