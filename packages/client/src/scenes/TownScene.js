@@ -159,7 +159,8 @@ export default class TownScene extends Phaser.Scene {
       'd': Phaser.Input.Keyboard.KeyCodes.D,
       'up': Phaser.Input.Keyboard.KeyCodes.UP,
       'w': Phaser.Input.Keyboard.KeyCodes.W,
-      'space': Phaser.Input.Keyboard.KeyCodes.SPACE
+      'space': Phaser.Input.Keyboard.KeyCodes.SPACE,
+      'boost': Phaser.Input.Keyboard.KeyCodes.B
     });
   }
 
@@ -242,7 +243,7 @@ Click to continue.
   }
 
   updatePlayer() {
-    const velocity = 60;
+    const velocity = 60 * (this.keys.boost.isDown ? 5 : 1);
 
     if (this.keys.left.isDown || this.keys.a.isDown) {
       this.player.setVelocityX(-velocity);

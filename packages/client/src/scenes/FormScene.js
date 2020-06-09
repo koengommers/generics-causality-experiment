@@ -71,7 +71,7 @@ export default class FormScene extends Phaser.Scene {
   }
 
   create() {
-    this.input.keyboard.removeCapture('W,A,D,SPACE');
+    this.input.keyboard.removeCapture('W,A,D,SPACE,B');
 
     const element = this.add.dom(this.game.config.width/2, this.game.config.height/2).createFromCache(this.question.name);
 
