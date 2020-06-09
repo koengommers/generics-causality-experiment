@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const BUILDING_WIDTHS = {
+const BACKGROUND_WIDTHS = {
   'house-wood-dotted-1': 6,
   'house-wood-dotted-2': 6,
   'house-wood-tiles-1': 6,
@@ -8,7 +8,8 @@ const BUILDING_WIDTHS = {
   'house-brick-dotted-1': 6,
   'house-brick-dotted-2': 8,
   'house-brick-tiles-1': 6,
-  'house-brick-tiles-2': 8
+  'house-brick-tiles-2': 8,
+  'park': 10
 }
 
 const FOREGROUND_WIDTHS = {
@@ -71,7 +72,7 @@ const LEVELS_CONFIG = {
   }]
 };
 
-function generateBuildings(n) {
+function generateBackground(n) {
   const totalBuildings = _.sumBy(LEVELS_CONFIG.buildings, 'number');
   let buildings = _(LEVELS_CONFIG.buildings)
     .flatMap((building) => _.times(building.number, () => _.sample(building.sprite)))
@@ -88,7 +89,33 @@ function generateBuildings(n) {
     }));
   }
 
-  return buildings;
+  const totalPeople = _.sumBy(LEVELS_CONFIG.people, 'number');
+  let people = _(LEVELS_CONFIG.people)
+    .flatMap((people) => _.times(people.number, () => people.sprite))
+    .shuffle()
+    .chunk(_.floor(totalPeople / n))
+    .value();
+  if (people.length > n) {
+    const leftovers = _.last(people);
+    people = _.shuffle(_.map(_.take(people, n), (chunk, i) => {
+      if (i < leftovers.length) {
+        return chunk.concat([leftovers[i]]);
+      }
+      return chunk;
+    }));
+  }
+  people = people.map((level) => {
+    const parks = _.shuffle(_.assign(_.fill(new Array(_.ceil(level.length / 4)*4), null), level));
+    return _.chunk(parks, 4);
+  });
+
+  return _.zipWith(buildings, people, (houses, parks) => {
+    const background = _.map(houses, building => ({ type: 'building', building }));
+    parks.forEach(park => {
+      background.splice(_.random(1, background.length-1), 0, { type: 'park', people: park });
+    });
+    return background;
+  });
 }
 
 function generateForeground(n) {
@@ -137,28 +164,16 @@ function generateForeground(n) {
   });
 }
 
-function generatePeople(n) {
-  return _(LEVELS_CONFIG.people)
-  .flatMap((person) => _.times(person.number, () => person.sprite))
-  .shuffle()
-  .groupBy(() => _.random(0, n-1))
-  .values()
-  .value();
-}
-
 export default function generateLevels(n) {
-  const buildings = generateBuildings(n);
+  const background = generateBackground(n);
   const foreground = generateForeground(n);
-  const people = generatePeople(n)
-
   return _.map(_.range(n), (i) => {
-    const buildingsWidth = _.sumBy(buildings[i], (building) => BUILDING_WIDTHS[building]);
+    const backgroundWidth = _.sumBy(background[i], (item) => BACKGROUND_WIDTHS[item.type === 'building' ? item.building : item.type]);
     const foregroundWidth = _.sumBy(foreground[i], (item) => FOREGROUND_WIDTHS[item.type]);
     return {
-      width: _.max([buildingsWidth, foregroundWidth]) + 20,
-      buildings: buildings[i],
-      foreground: foreground[i],
-      people: people[i]
+      width: _.max([backgroundWidth, foregroundWidth]) + 20,
+      background: background[i],
+      foreground: foreground[i]
     }
   });
 }

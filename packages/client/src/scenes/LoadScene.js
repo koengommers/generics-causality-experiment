@@ -6,6 +6,9 @@ import sidewalkImg from '../assets/sidewalk.png';
 import grassImg from '../assets/grass.png';
 import parkingLot from '../assets/parking-lot.png';
 import policeMan from '../assets/police-man.png';
+import parkFence from '../assets/park-fence.png';
+import parkFlowers from '../assets/park-flowers.png';
+import parkTrashcan from '../assets/park-trashcan.png';
 
 import houseBrickDotted1 from '../assets/subjects/house-brick-dotted-1.png';
 import houseBrickDotted2 from '../assets/subjects/house-brick-dotted-2.png';
@@ -48,6 +51,9 @@ export default class LoadScene extends Phaser.Scene {
     this.load.image('grass', grassImg);
     this.load.image('parking-lot', parkingLot);
     this.load.image('police-man', policeMan);
+    this.load.image('park-fence', parkFence);
+    this.load.image('park-flowers', parkFlowers);
+    this.load.image('park-trashcan', parkTrashcan);
 
     this.load.image('house-brick-dotted-1', houseBrickDotted1);
     this.load.image('house-brick-dotted-2', houseBrickDotted2);

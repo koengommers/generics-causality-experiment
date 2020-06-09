@@ -22,9 +22,9 @@ export default class TownScene extends Phaser.Scene {
 
     const ground = this.createGround();
     this.createLevel();
+    this.player = this.createPlayer();
     this.createPause();
 
-    this.player = this.createPlayer();
     this.keys = this.createInput();
 
     this.physics.add.collider(this.player, ground);
@@ -83,19 +83,41 @@ export default class TownScene extends Phaser.Scene {
   }
 
   createLevel() {
-    this.createBuildings();
+    this.createBackground();
     this.createForeground();
-    this.createPeople();
 
     const text = this.add.text(10, 10, `Town ${this.currentLevel}`);
     text.setScrollFactor(0);
   }
 
-  createBuildings() {
+  createBackground() {
     let x = 16*6;
+    this.people = this.physics.add.group();
 
-    this.level.buildings.forEach((building) => {
-      x += this.add.sprite(x, this.game.config.height - 108, building).setOrigin(0, 1).width;
+    this.level.background.forEach(item => {
+      if (item.type === 'building') {
+        x += this.add.sprite(x, this.game.config.height - 108, item.building).setOrigin(0, 1).width;
+      } else if (item.type === 'park') {
+        const leftX = x;
+        const rightX = x + 10*16;
+
+        this.add.sprite(leftX + 7, this.game.config.height - 112, 'park-flowers').setOrigin(0, 1);
+        this.add.sprite(rightX - 9, this.game.config.height - 112, 'park-trashcan').setOrigin(1, 1);
+
+        item.people.forEach(personSprite => {
+          const person = this.people.create(_.random(leftX+8, rightX-8), this.game.config.height - 112, personSprite).setOrigin(0.5, 1);
+          person.body.setAllowGravity(false);
+          person.maxLeft = leftX + 8;
+          person.maxRight = rightX - 8;
+          person.setCollideWorldBounds(true);
+          person.setVelocityX(_.random(-1, 1)*20);
+        });
+
+        this.add.sprite(leftX - 1, this.game.config.height - 112, 'park-fence').setOrigin(0, 1);
+        this.add.sprite(rightX + 1, this.game.config.height - 112, 'park-fence').setOrigin(1, 1).setFlipX(true);
+
+        x = rightX;
+      }
     });
   }
 
@@ -120,21 +142,10 @@ export default class TownScene extends Phaser.Scene {
         item.trees.forEach((tree) => {
           const treeX = x*16 + tree.x;
           const y = this.game.config.height - 3*16 + tree.y;
-          this.add.sprite(treeX, y, tree.sprite).setOrigin(0.5, 1).depth = 1;
+          this.add.sprite(treeX, y, tree.sprite).setOrigin(0.5, 1);
         });
         x += 8;
       }
-    });
-  }
-
-  createPeople() {
-    this.people = this.physics.add.group();
-
-    this.level.people.forEach((personSprite) => {
-      const person = this.people.create(_.random(16, (this.level.width-1)*16), this.game.config.height - 56, personSprite).setOrigin(0.5, 1);
-      person.body.setAllowGravity(false);
-      person.setCollideWorldBounds(true);
-      person.setVelocityX(_.random(-45, 45));
     });
   }
 
@@ -174,7 +185,6 @@ Click to continue.
       const overlay = this.add.rectangle(0, 0, this.game.config.width, this.game.config.height, 0x171515, 0.8);
       overlay.setOrigin(0, 0);
       overlay.setScrollFactor(0);
-      overlay.depth = 2;
 
       const text = this.add.text(this.game.config.width/2, this.game.config.height/2, texts[this.currentLevel], {
         fontSize: '14px',
@@ -192,11 +202,9 @@ Click to continue.
       });
       text.setOrigin(0.5, 0.5);
       text.setScrollFactor(0);
-      text.depth = 2;
 
       const speaker = this.add.sprite(text.x - text.width/2 + 2, text.y - text.height/2 + 10, 'police-man').setScale(2);
       speaker.setOrigin(0.5, 0);
-      speaker.depth = 2;
 
       this.scene.pause();
       this.game.canvas.addEventListener('mousedown', () => {
@@ -211,17 +219,7 @@ Click to continue.
   update() {
     this.checkFinish();
     this.updatePlayer();
-
-    this.people.getChildren().forEach(person => {
-      if (Math.random() < 0.01) {
-        person.setVelocityX(_.random(-45, 45));
-      }
-      if (person.body.velocity.x < 0) {
-        person.setFlipX(true);
-      } else {
-        person.setFlipX(false);
-      }
-    })
+    this.updatePeople();
   }
 
   checkFinish() {
@@ -269,5 +267,22 @@ Click to continue.
     } else if (this.player.body.velocity.y > 0) {
       this.player.anims.play('fall');
     }
+  }
+
+  updatePeople() {
+    this.people.getChildren().forEach(person => {
+      if (person.x <= person.maxLeft) {
+        person.setVelocityX(20);
+      } else if (person.x >= person.maxRight) {
+        person.setVelocityX(-20);
+      } else if (Math.random() < 0.01) {
+        person.setVelocityX(_.random(-1, 1)*20);
+      }
+      if (person.body.velocity.x < 0) {
+        person.setFlipX(true);
+      } else {
+        person.setFlipX(false);
+      }
+    });
   }
 }
