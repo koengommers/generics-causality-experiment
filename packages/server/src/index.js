@@ -124,14 +124,7 @@ app.get('/survey/submissions/download', basicAuth({ users: { 'admin': process.en
 });
 
 app.post('/survey/submissions/', async (req, res) => {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let completionCode;
-  if (participationId) {
-    completionCode = '';
-    for (let i = 8; i > 0; i--) {
-      completionCode += chars[Math.floor(Math.random() * chars.length)];
-    }
-  }
+  const completionCode = process.env.CC_CODE;
 
   const { participationId, responses, duration } = req.body;
   const submission = {
