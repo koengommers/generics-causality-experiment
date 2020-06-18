@@ -7,9 +7,9 @@ export default class ShowScene extends Phaser.Scene {
 
     this.groups = [{
       text: `
-There are a few things you should know about Farland before we begin.
+There are a few things you should know about Farland before we begin. After you have explored Farland, we will ask you what you learned about those things.
 
-Let’s start with the trees: The trees that grow in Farland are either truce trees or naple trees. Biologists explain their differences in size by their sensitivity to nitrogen in the soil.
+Let's start with the trees: The trees that grow in Farland are either truce trees or naple trees. Biologists explain their differences in size by their sensitivity to nitrogen in the soil.
       `,
       objects: [{
         name: 'Truce trees',
