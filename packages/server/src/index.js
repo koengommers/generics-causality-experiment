@@ -125,11 +125,12 @@ app.get('/survey/submissions/download', basicAuth({ users: { 'admin': process.en
 
 app.post('/survey/submissions/', async (req, res) => {
   let completionCode;
+
+  const { participationId, responses, duration } = req.body;
   if (participationId) {
     completionCode = process.env.CC_CODE;
   };
 
-  const { participationId, responses, duration } = req.body;
   const submission = {
     ...responses,
     participationId,
