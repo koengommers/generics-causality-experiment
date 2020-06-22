@@ -5,6 +5,7 @@ import knex from 'knex';
 import basicAuth from 'express-basic-auth';
 import { parse as json2csv } from 'json2csv';
 import dotenv from 'dotenv';
+import hbs from 'hbs';
 
 import knexfile from '../knexfile';
 
@@ -18,9 +19,10 @@ const port = process.env.PORT || 8080;
 app.use(morgan('tiny'));
 app.use(bodyParser.json());
 
+hbs.registerPartials(__dirname + '/../templates/partials');
 app.set('views', 'templates');
 app.set('view engine', 'hbs');
-app.engine('html', require('hbs').__express);
+app.engine('html', hbs.__express);
 
 app.use('/', express.static('../client/dist/'))
 
@@ -38,42 +40,42 @@ app.get('/survey/finish/:completionCode', async (req, res) => {
 
 app.get('/survey/question/:id', async (req, res) => {
   const questions = [{
-    template: 'generic.html',
+    template: 'statement.html',
     context: {
       question: 'Naple trees are small.'
     }
   }, {
-    template: 'generic.html',
+    template: 'statement.html',
     context: {
       question: 'Trucks are yellow.'
     }
   }, {
-    template: 'generic.html',
+    template: 'statement.html',
     context: {
       question: 'Wooden houses have polka dots on the roof.'
     }
   }, {
-    template: 'generic.html',
+    template: 'statement.html',
     context: {
       question: 'Men are blue skinned.'
     }
   }, {
-    template: 'generic.html',
+    template: 'statement.html',
     context: {
       question: 'There are naple trees that are small.'
     }
   }, {
-    template: 'generic.html',
+    template: 'statement.html',
     context: {
       question: 'There are trucks that are yellow.'
     }
   }, {
-    template: 'generic.html',
+    template: 'statement.html',
     context: {
       question: 'There are brick houses with polka dots on the roof.'
     }
   }, {
-    template: 'generic.html',
+    template: 'statement.html',
     context: {
       question: 'There are women that are blue skinned.'
     }

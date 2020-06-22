@@ -1,71 +1,6 @@
-<style>
-  .form {
-    background-color: #fff;
-    font-family: 'Roboto', Arial, Helvetica, sans-serif;
-    padding: 20px;
-    border-radius: 5px;
-    width: 500px;
-    box-sizing: border-box;
-    font-size: 10px;
-  }
+{{> style }}
 
-  .form-options.generic {
-    display: flex;
-    text-align: center;
-  }
-
-  .form-options.generic div {
-    width: 20%;
-  }
-
-  .form-options.generic input {
-    display: block;
-    margin: 0 auto 10px;
-  }
-
-  .form-submit {
-    text-align: right;
-  }
-
-  a {
-    background-color: #222;
-    box-shadow: none;
-    color: #fff;
-    font-family: inherit;
-    font-size: inherit;
-    border: 0;
-    padding: 6px 10px;
-    border-radius: 2px;
-    cursor: pointer;
-    text-decoration: none;
-    margin-top: 10px;
-    display: inline-block;
-  }
-
-  .bottom {
-    margin-top: 20px;
-  }
-
-  input[type=range] {
-    display: inline-block;
-  }
-
-  p {
-    margin-top: 0;
-  }
-
-  .bottom {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  #error {
-    color: red;
-    margin-bottom: 5px;
-  }
-</style>
-
-<form class="form">
+<div class="finish">
   <p>
     Thank you again for taking part in this study! If you are interested, you will find some information about the research we are conducting below. 
   {{#if completionCode }}
@@ -83,6 +18,6 @@
     Kochari, A., Rooij, R., & Schulz, K. (2020). Generics and Alternatives. <em>Frontiers in Psychology</em>.
   </p>
   {{#if completionCode }}
-  <a href="https://app.prolific.co/submissions/complete?cc={{ completionCode }}">Complete survey participation</a>
+  <a class="button" href="https://app.prolific.co/submissions/complete?cc={{ completionCode }}">Complete survey participation</a>
   {{/if}}
-</form>
+</div>
